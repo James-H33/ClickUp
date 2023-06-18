@@ -1,3 +1,15 @@
-<p>
-  accordian works!
-</p>
+<div class="cu-accordian">
+  <div class="cu-accordian-header" [class.open]="isOpen" (click)="toggle()">
+    <div>
+      <ng-content select="[header]"></ng-content>
+    </div>
+
+    <div class="cu-accordian-header__icon">
+      <cu-icon type="chevron-down"></cu-icon>
+    </div>
+  </div>
+
+  <div class="cu-accordian-content" [class.open]="isOpen">
+    <ng-content select="[body]"></ng-content>
+  </div>
+</div>

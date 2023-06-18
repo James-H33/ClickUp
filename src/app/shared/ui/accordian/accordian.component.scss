@@ -1,0 +1,55 @@
+.cu-accordian {
+  cursor: pointer;
+
+  &:hover {
+    .cu-accordian-header {
+      background-color: #f2f2f2;
+    }
+  }
+}
+
+.cu-accordian-header {
+  height: 47px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px;
+  padding-left: 20px;
+  box-sizing: border-box;
+
+  ::ng-deep * {
+    color: var(--light-passive-text-color);
+    fill: var(--light-passive-text-color);
+    text-transform: uppercase;
+    font-size: 11px;
+    font-weight: 600;
+  }
+
+  .cu-accordian-header__icon {
+    transform: rotate(270deg);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  &.open {
+    .cu-accordian-header__icon {
+      transform: rotate(360deg);
+    }
+
+    ::ng-deep * {
+      color: var(--passive-text-color);
+      fill: var(--passive-text-color);
+    }
+  }
+}
+
+.cu-accordian-content {
+  max-height: 0;
+  overflow: hidden;
+  box-sizing: border-box;
+  transition: max-height 0.3s ease-in-out;
+  border-bottom: 1px solid var(--border-color);
+
+  &.open {
+    max-height: 300px;
+  }
+}
