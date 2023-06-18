@@ -1,0 +1,113 @@
+.cu-sidebar {
+  height: 100vh;
+  border-right: 1px solid #e8e8e8;
+}
+
+.cu-sidebar-header {
+  height: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 13px 12px 1px;
+  box-sizing: border-box;
+  margin-bottom: 20px;
+  cursor: pointer;
+
+  &:hover {
+    .cu-sidebar-header__actions .cu-sidebar-header__actions-cog {
+      opacity: 1;
+    }
+  }
+
+  .cu-sidebar-logo {
+    margin-bottom: -3px;
+  }
+
+  .cu-sidebar-header__logo {
+    display: flex;
+    align-items: center;
+    column-gap: 5px;
+  }
+
+  .cu-sidebar-header__actions {
+    display: flex;
+    column-gap: 5px;
+
+    .cu-sidebar-header__actions-cog {
+      opacity: 0;
+      transition: opacity 0.3s ease-in-out;
+
+      &:hover {
+        cu-icon {
+          fill: var(--theme-main-color);
+        }
+      }
+
+      cu-icon {
+        fill: var(--icon-passive-color);
+
+        ::ng-deep {
+          .cu-icon {
+            height: 15px;
+            width: 15px;
+          }
+        }
+      }
+    }
+
+    cu-icon {
+      fill: var(--theme-main-color);
+
+      ::ng-deep {
+        .cu-icon {
+          height: 13px;
+          width: 13px;
+        }
+      }
+    }
+  }
+
+  svg {
+    height: 12px;
+    width: 12px;
+  }
+
+  img {
+    height: 19px;
+  }
+}
+
+
+.cu-sidebar-search {
+  margin: 0 8px;
+}
+
+.cu-sidebar-links {
+  padding: 10px 0;
+
+  > a {
+    height: 30px;
+    display: flex;
+    align-items: center;
+    column-gap: 10px;
+    text-decoration: none;
+    padding-left: 18px;
+
+    span {
+      color: var(--base-text-color);
+    }
+  }
+
+  cu-icon {
+    ::ng-deep {
+      .cu-icon {
+        fill: var(--base-text-color);
+        height: 18px;
+        width: 18px;
+      }
+    }
+  }
+}
+
+.cu-sidebar-dropdowns {}
+

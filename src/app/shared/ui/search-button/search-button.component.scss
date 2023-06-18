@@ -1,0 +1,41 @@
+.cu-search-button {
+  width: auto;
+  height: 100%;
+  flex-grow: 1;
+  border-radius: 4px;
+  background: #f6f7f9;
+  --cu-search-button-icon-color: #7c828d80;
+
+  &:hover {
+    --cu-search-button-icon-color: var(--theme-main-color);
+  }
+}
+
+.cu-search-button__inner {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@mixin cu-color-on-hover() {
+  font-size: 12px;
+  font-weight: 400;
+  color: var(--cu-search-button-icon-color);
+  transition: all 0.3s ease-in-out;
+}
+
+.cu-search-button__icon {
+  @include cu-color-on-hover();
+  fill: var(--cu-search-button-icon-color);
+  margin-top: -2px;
+}
+
+.cu-search-button__text {
+  @include cu-color-on-hover();
+}
+
+.cu-search-button__short-key {
+  @include cu-color-on-hover();
+}

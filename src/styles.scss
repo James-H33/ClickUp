@@ -1,1 +1,21 @@
 /* You can add global styles to this file, and also import other style files */
+
+* {
+  color: #2a2e34;
+  margin: 0;
+  padding: 0;
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+:root {
+  --theme-main-color: #7b68ee;
+  --theme-main-color-rgb: 123, 104, 238;
+  --theme-main-color-dark: #5b43ea;
+  --theme-main-color-light: #dfdbfb;
+  --icon-passive-color: #7c828d80;
+  --base-text-color: #53575e;
+}
+
+@import './styles/buttons';

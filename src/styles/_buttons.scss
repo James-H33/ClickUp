@@ -1,0 +1,16 @@
+button {
+  cursor: pointer;
+  outline: none;
+  border: none;
+  background: transparent;
+  border-radius: 4px;
+  transition: all 0.3s ease-in-out;
+
+  &:hover {
+    background-color: #f2f2f2;
+  }
+
+  &:focus {
+    outline: none;
+  }
+}
