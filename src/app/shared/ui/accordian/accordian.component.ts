@@ -1,15 +1,23 @@
-import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IconComponent } from '../icon/icon.component';
 
 @Component({
+  standalone: true,
   selector: 'cu-accordian',
   templateUrl: './accordian.component.html',
-  styleUrls: ['./accordian.component.scss']
+  styleUrls: ['./accordian.component.scss'],
+  imports: [
+    CommonModule,
+    IconComponent
+  ]
 })
-export class AccordianComponent implements OnInit {
+export class AccordianComponent {
+  @Input() isOpen = false;
+  @Output() isOpenChange = new EventEmitter<boolean>();
 
-  constructor() { }
-
-  ngOnInit() {
+  public toggle() {
+    this.isOpen = !this.isOpen;
+    this.isOpenChange.emit(this.isOpen);
   }
-
 }

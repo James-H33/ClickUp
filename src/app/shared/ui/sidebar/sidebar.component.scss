@@ -4,13 +4,13 @@
 }
 
 .cu-sidebar-header {
-  height: 48px;
+  height: 45px;
   display: flex;
   align-items: center;
   justify-content: space-between;
   padding: 13px 12px 1px;
   box-sizing: border-box;
-  margin-bottom: 20px;
+  margin-bottom: 15px;
   cursor: pointer;
 
   &:hover {
@@ -73,7 +73,7 @@
   }
 
   img {
-    height: 19px;
+    height: 20px;
   }
 }
 
@@ -86,22 +86,28 @@
   padding: 10px 0;
 
   > a {
-    height: 30px;
+    height: 32px;
     display: flex;
     align-items: center;
     column-gap: 10px;
     text-decoration: none;
     padding-left: 18px;
 
+    &:hover {
+      background: #f6f7f9;
+    }
+
     span {
-      color: var(--base-text-color);
+      font-size: 13px;
+      font-weight: 400;
+      color: var(--passive-text-color);
     }
   }
 
   cu-icon {
     ::ng-deep {
       .cu-icon {
-        fill: var(--base-text-color);
+        fill: var(--light-passive-text-color);
         height: 18px;
         width: 18px;
       }
@@ -109,5 +115,18 @@
   }
 }
 
-.cu-sidebar-dropdowns {}
+.cu-sidebar-accordians {
+  .cu-sidebar-accordians__links {
+    display: flex;
+    flex-direction: column;
+    padding: 20px;
+
+    > a {
+      display: flex;
+      align-items: center;
+      height: 30px;
+    }
+  }
+
+}
 

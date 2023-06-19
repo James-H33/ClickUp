@@ -15,7 +15,10 @@ body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
   --theme-main-color-dark: #5b43ea;
   --theme-main-color-light: #dfdbfb;
   --icon-passive-color: #7c828d80;
-  --base-text-color: #53575e;
+  --base-text-color: #2a2e34;
+  --passive-text-color: #53575e;
+  --light-passive-text-color: #979797;
+  --border-color: #e6e6e6;
 }
 
 @import './styles/buttons';

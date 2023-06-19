@@ -1,8 +1,10 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, ViewChildren } from '@angular/core';
 import { RouterModule } from '@angular/router';
-import { SearchButtonComponent } from '../search-button/search-button.component';
+import { AccordianComponent } from '../accordian/accordian.component';
 import { IconComponent } from '../icon/icon.component';
+import { SearchButtonComponent } from '../search-button/search-button.component';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   standalone: true,
@@ -11,16 +13,25 @@ import { IconComponent } from '../icon/icon.component';
   styleUrls: ['./sidebar.component.scss'],
   imports: [
     CommonModule,
+    FormsModule,
     RouterModule,
     SearchButtonComponent,
-    IconComponent
+    IconComponent,
+    AccordianComponent
   ]
 })
-export class SidebarComponent implements OnInit {
+export class SidebarComponent {
+  @ViewChildren(AccordianComponent) accordians: AccordianComponent[] = [];
 
-  constructor() { }
-
-  ngOnInit() {
+  public accordianOpenedChange(isOpen: boolean, ref: AccordianComponent) {
+    this.accordians.forEach((accordian, i) => {
+      if (accordian !== ref) {
+        accordian.isOpen = false;
+      }
+    });
   }
 
+  public collapseSidebar() {
+
+  }
 }
