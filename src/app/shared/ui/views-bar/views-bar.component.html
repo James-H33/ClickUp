@@ -1,38 +1,52 @@
-<div class="cu-views">
-  <div class="cu-views__title">
-    <button>
-      <cu-icon type="no-color" />
-    </button>
-    <div>
-      Work
+<ng-container *ngIf="vm$ | async">
+
+  <div class="cu-views">
+    <ng-container *ngIf="!vm.isSideMenuOpen">
+        <button #sideBarIconRef class="cu-views__sidebar-icon"
+          appMenuControl
+          [class.is-hovered]="vm.isSimpleMenuOpen"
+          (click)="openSideMenu()">
+
+          <cu-icon [size]="13" class="chevron hover-primary" type="double-right-chevron" />
+          <cu-icon [size]="16" class="menu" type="menu" />
+        </button>
+    </ng-container>
+
+    <div class="cu-views__title">
+      <button class="focused">
+        <cu-icon type="no-color" />
+      </button>
+      <div>
+        Work
+      </div>
+    </div>
+
+    <div class="cu-views__group">
+      <div class="cu-views__group-divider"></div>
+
+      <div class="cu-views__group-item active">
+        <div>
+          <cu-icon type="list" />
+        </div>
+
+        <div class="cu-views__group-item-text">
+          List
+        </div>
+      </div>
+
+      <div class="cu-views__group-divider"></div>
+
+      <div class="cu-views__group-item">
+        <div>
+          <cu-icon type="board" />
+        </div>
+
+        <div class="cu-views__group-item-text">
+          Board
+        </div>
+      </div>
+
+      <div class="cu-views__group-divider"></div>
     </div>
   </div>
-
-  <div class="cu-views__group">
-    <div class="cu-views__group-divider"></div>
-
-    <div class="cu-views__group-item active">
-      <div>
-        <cu-icon type="list" />
-      </div>
-
-      <div class="cu-views__group-item-text">
-        List
-      </div>
-    </div>
-
-    <div class="cu-views__group-divider"></div>
-
-    <div class="cu-views__group-item">
-      <div>
-        <cu-icon type="board" />
-      </div>
-
-      <div class="cu-views__group-item-text">
-        Board
-      </div>
-    </div>
-
-    <div class="cu-views__group-divider"></div>
-  </div>
-</div>
+</ng-container>

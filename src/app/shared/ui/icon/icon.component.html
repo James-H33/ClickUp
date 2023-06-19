@@ -1,4 +1,4 @@
-<div class="cu-icon">
+<div class="cu-icon" [ngStyle]="{ height: size + 'px', width: size + 'px' }" >
   <ng-container [ngSwitch]="type">
     <ng-container *ngSwitchCase="'search'">
       <svg
@@ -20,6 +20,26 @@
         xmlns="http://www.w3.org/2000/svg"
         id="svg-sprite-cu3-chevron-double-left"
         viewBox="0 0 12 12"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M6.53.47a.75.75 0 0 1 0 1.06L2.06 6l4.47 4.47a.75.75 0 1 1-1.06 1.06l-5-5a.75.75 0 0 1 0-1.06l5-5a.75.75 0 0 1 1.06 0z"
+          clip-rule="evenodd"
+        />
+        <path
+          fill-rule="evenodd"
+          d="M11.466.47a.75.75 0 0 1 0 1.06L6.996 6l4.47 4.47a.75.75 0 1 1-1.061 1.06l-5-5a.75.75 0 0 1 0-1.06l5-5a.75.75 0 0 1 1.06 0z"
+          clip-rule="evenodd"
+        />
+      </svg>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'double-right-chevron'">
+      <svg
+        class="ng-star-inserted"
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 12 12"
+        style="transform: rotate(180deg)"
       >
         <path
           fill-rule="evenodd"
@@ -149,6 +169,21 @@
           d="M2 4.078C2 2.967 2.86 2 4 2h8c1.14 0 2 .967 2 2.078v6.393c0 1.111-.86 2.078-2 2.078H8.667v.04c0 1.11-.86 2.078-2 2.078H4c-1.14 0-2-.967-2-2.079v-8.51zm5.333-.745H4c-.333 0-.667.298-.667.745v8.51c0 .448.334.745.667.745h2.667c.332 0 .666-.297.666-.745V3.333zm1.334 0v7.883H12c.333 0 .667-.297.667-.745V4.078c0-.447-.334-.745-.667-.745H8.667z"
           clip-rule="evenodd"
         />
+      </svg>
+    </ng-container>
+
+    <ng-container *ngSwitchCase="'menu'">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        fill="none"
+        viewBox="0 0 24 24"
+      >
+        <path
+          fill="currentColor"
+          fill-rule="evenodd"
+          d="M6 4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h2V4H6Zm4 0v16h8a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-8ZM2 6a4 4 0 0 1 4-4h12a4 4 0 0 1 4 4v12a4 4 0 0 1-4 4H6a4 4 0 0 1-4-4V6Zm11.293 2.293a1 1 0 0 1 1.414 0l3 3a1 1 0 0 1 0 1.414l-3 3a1 1 0 0 1-1.414-1.414L15.586 12l-2.293-2.293a1 1 0 0 1 0-1.414Z"
+          clip-rule="evenodd"
+        ></path>
       </svg>
     </ng-container>
   </ng-container>

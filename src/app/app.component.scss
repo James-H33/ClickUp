@@ -4,6 +4,10 @@
   height: 100%;
   width: 100%;
   overflow: hidden;
+
+  &.side-bar-collapsed {
+    grid-template-columns: 1px 1fr;
+  }
 }
 
 .cu-root-views {

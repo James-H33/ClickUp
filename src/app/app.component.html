@@ -1,5 +1,6 @@
-<div class="cu-root-container">
-  <cu-sidebar></cu-sidebar>
+<ng-container *ngIf="isSideMenuOpen$ | async"></ng-container>
+<div class="cu-root-container" [class.side-bar-collapsed]="!isSideMenuOpen">
+  <cu-sidebar />
 
   <div class="cu-root-content">
     <cu-views-bar />

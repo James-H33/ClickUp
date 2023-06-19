@@ -1,3 +1,15 @@
+:host {
+  --fill-color: #2a2e34;
+
+  &.primary {
+    --fill-color: var(--theme-main-color);
+  }
+
+  &.hover-primary {
+    --hover-color: var(--theme-main-color);
+  }
+}
+
 .cu-icon {
   height: 12px;
   width: 12px;
@@ -5,4 +17,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
+
+  &:hover {
+    fill: var(--hover-color);
+  }
 }

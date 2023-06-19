@@ -6,11 +6,47 @@
   align-items: center;
   border-bottom: 1px solid var(--border-color);
 
+  .cu-views__sidebar-icon {
+    width: 34px;
+    margin-right: 8px;
+    position: relative;
+
+    .chevron {
+      display: none;
+    }
+
+    .menu {
+      display: unset;
+    }
+
+    &.is-hovered {
+      &::before {
+        content: '';
+        position: absolute;
+        height: 100px;
+        width: 100px;
+        background-color: transparent;
+        left: 0;
+        top: 100%;
+        z-index: 1;
+      }
+
+      .chevron {
+        display: unset;
+      }
+
+      .menu {
+        display: none;
+      }
+    }
+  }
+
   cu-icon {
     ::ng-deep {
       .cu-icon {
-        height: 15px;
-        width: 15px;
+        height: 14px;
+        width: 14px;
+        padding: 9px;
       }
     }
   }
@@ -39,7 +75,7 @@
       height: 100%;
       display: flex;
       align-items: center;
-      font-size: 1rem;
+      font-size: 0.9rem;
       font-weight: 400;
       cursor: pointer;
       position: relative;
