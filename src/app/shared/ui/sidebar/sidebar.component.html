@@ -1,92 +1,112 @@
-<div class="cu-sidebar">
-  <div class="cu-sidebar-header">
-    <div class="cu-sidebar-header__logo">
-      <img
-        src="https://app-cdn.clickup.com/assets/images/brand/clickup-symbol_color.svg"
-        alt="ClickUp Logo"
-      />
-
-      <img
-        class="cu-sidebar-logo"
-        src="https://app-cdn.clickup.com/assets/images/brand/clickup-text.svg"
-        alt="ClickUp Logo"
-      />
+<ng-container *ngIf="vm$ | async">
+  <div class="cu-sidebar" [class.is-collapsed]="!vm.isMenuOpen">
+    <div
+      *ngIf="!vm.isMenuOpen"
+      class="cu-sidebar-simple"
+      [class.slide-open]="vm.isSimpleMenuOpen"
+      appMenuControl>
+      <ng-templateOutlet
+        [ngTemplateOutlet]="sideMainContent">
+      </ng-templateOutlet>
     </div>
 
-    <div class="cu-sidebar-header__actions">
-      <button class="cu-sidebar-header__actions-cog">
-        <cu-icon type="cog" />
-      </button>
+    <div *ngIf="vm.isMenuOpen" class="cu-sidebar-full">
+      <div class="cu-sidebar-header">
+        <div class="cu-sidebar-header__logo">
+          <img
+            src="https://app-cdn.clickup.com/assets/images/brand/clickup-symbol_color.svg"
+            alt="ClickUp Logo"
+          />
 
-      <button (click)="collapseSidebar()">
-        <cu-icon type="double-left-chevron" />
-      </button>
+          <img
+            class="cu-sidebar-logo"
+            src="https://app-cdn.clickup.com/assets/images/brand/clickup-text.svg"
+            alt="ClickUp Logo"
+          />
+        </div>
+
+        <div class="cu-sidebar-header__actions">
+          <button class="cu-sidebar-header__actions-cog">
+            <cu-icon type="cog" />
+          </button>
+
+          <button (click)="collapseSidebar()">
+            <cu-icon type="double-left-chevron" />
+          </button>
+        </div>
+      </div>
+
+      <ng-templateOutlet
+        [ngTemplateOutlet]="sideMainContent">
+      </ng-templateOutlet>
     </div>
+
+    <ng-template #sideMainContent>
+      <div class="cu-sidebar-search">
+        <cu-search-button />
+      </div>
+
+      <div class="cu-sidebar-links">
+        <a routerLink="/home">
+          <cu-icon type="home" />
+          <span>Home</span>
+        </a>
+        <a routerLink="/notifications">
+          <cu-icon type="bell" />
+          <span>Notifications</span>
+        </a>
+        <a routerLink="/goals">
+          <cu-icon type="goal" />
+          <span>Goals</span>
+        </a>
+      </div>
+
+      <div class="cu-sidebar-accordians">
+        <cu-accordian #fav (isOpenChange)="accordianOpenedChange($event, fav)">
+          <div header>
+            <span>Favorites</span>
+          </div>
+
+          <div class="cu-sidebar-accordians__links" body>
+            <a routerLink="/new-task">Task</a>
+            <a routerLink="/new-list">List</a>
+            <a routerLink="/new-folder">Folder</a>
+            <a routerLink="/new-space">Space</a>
+            <a routerLink="/new-goal">Goal</a>
+            <a routerLink="/new-template">Template</a>
+          </div>
+        </cu-accordian>
+
+        <cu-accordian #space (isOpenChange)="accordianOpenedChange($event, space)">
+          <div header>
+            <span>Spaces</span>
+          </div>
+
+          <div class="cu-sidebar-accordians__links" body>
+            <div>NOT IMPLEMENTED</div>
+          </div>
+        </cu-accordian>
+
+        <cu-accordian #dashboards (isOpenChange)="accordianOpenedChange($event, dashboards)">
+          <div header>
+            <span>Dashboards</span>
+          </div>
+
+          <div class="cu-sidebar-accordians__links" body>
+            <div>NOT IMPLEMENTED</div>
+          </div>
+        </cu-accordian>
+
+        <cu-accordian #docs (isOpenChange)="accordianOpenedChange($event, docs)">
+          <div header>
+            <span>Docs</span>
+          </div>
+
+          <div class="cu-sidebar-accordians__links" body>
+            <div>NOT IMPLEMENTED</div>
+          </div>
+        </cu-accordian>
+      </div>
+    </ng-template>
   </div>
-
-  <div class="cu-sidebar-search">
-    <cu-search-button />
-  </div>
-
-  <div class="cu-sidebar-links">
-    <a routerLink="/home">
-      <cu-icon type="home" />
-      <span>Home</span>
-    </a>
-    <a routerLink="/notifications">
-      <cu-icon type="bell" />
-      <span>Notifications</span>
-    </a>
-    <a routerLink="/goals">
-      <cu-icon type="goal" />
-      <span>Goals</span>
-    </a>
-  </div>
-
-  <div class="cu-sidebar-accordians">
-    <cu-accordian #fav (isOpenChange)="accordianOpenedChange($event, fav)">
-      <div header>
-        <span>Favorites</span>
-      </div>
-
-      <div class="cu-sidebar-accordians__links" body>
-        <a routerLink="/new-task">Task</a>
-        <a routerLink="/new-list">List</a>
-        <a routerLink="/new-folder">Folder</a>
-        <a routerLink="/new-space">Space</a>
-        <a routerLink="/new-goal">Goal</a>
-        <a routerLink="/new-template">Template</a>
-      </div>
-    </cu-accordian>
-
-    <cu-accordian #space (isOpenChange)="accordianOpenedChange($event, space)">
-      <div header>
-        <span>Spaces</span>
-      </div>
-
-      <div class="cu-sidebar-accordians__links" body>
-        <div>NOT IMPLEMENTED</div>
-      </div>
-    </cu-accordian>
-
-    <cu-accordian #dashboards (isOpenChange)="accordianOpenedChange($event, dashboards)">
-      <div header>
-        <span>Dashboards</span>
-      </div>
-
-      <div class="cu-sidebar-accordians__links" body>
-        <div>NOT IMPLEMENTED</div>
-      </div>
-    </cu-accordian>
-
-    <cu-accordian #docs (isOpenChange)="accordianOpenedChange($event, docs)">
-      <div header>
-        <span>Docs</span>
-      </div>
-
-      <div class="cu-sidebar-accordians__links" body>
-        <div>NOT IMPLEMENTED</div>
-      </div>
-    </cu-accordian>
-  </div>
-</div>
+</ng-container>
