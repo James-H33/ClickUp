@@ -1,0 +1,31 @@
+<div class="cu-board">
+  <div class="cu-board-header">
+    <div class="cu-board-header__item" *ngFor="let board of boards" [ngStyle]="{ 'border-top-color': board.color }">
+      <div class="cu-board-header__item-title">
+        {{board.name}}
+      </div>
+
+      <div class="cu-board-header__item-tasks-count">{{board.tasks.length}}</div>
+    </div>
+  </div>
+
+  <div class="cu-board-dashboard" cdkDropListGroup>
+    <div
+      *ngFor="let board of boards; let i = index"
+      class="cu-board-dashboard__column"
+      [id]="board.id.toString()"
+      [cdkDropListData]="[board]"
+      (cdkDropListDropped)="drop($event)"
+      cdkDropList>
+
+      <div *ngFor="let task of board.tasks; let taskIndex = index" cdkDrag [cdkDragData]="[task, taskIndex]">
+        <cu-task [task]="task" />
+      </div>
+
+      <button class="cu-board-dashboard__add-task">
+        <span>+</span>
+        <span>New Task</span>
+      </button>
+    </div>
+  </div>
+</div>

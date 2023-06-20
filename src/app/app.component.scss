@@ -1,18 +1,18 @@
 .cu-root-container {
   display: grid;
-  grid-template-columns: 300px 1fr;
+  grid-template-columns: 300px calc(100vw - 300px);
   height: 100%;
   width: 100%;
   overflow: hidden;
 
   &.side-bar-collapsed {
-    grid-template-columns: 1px 1fr;
+    grid-template-columns: 1px calc(100vw - 1px);
   }
 }
 
 .cu-root-views {
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+  // height: 100%;
+  // display: flex;
+  // justify-content: center;
+  // align-items: center;
 }
