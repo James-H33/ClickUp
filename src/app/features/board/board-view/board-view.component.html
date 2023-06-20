@@ -13,9 +13,9 @@
     <div
       *ngFor="let board of boards; let i = index"
       class="cu-board-dashboard__column"
-      [id]="board.id.toString()"
+      [id]="i.toString()"
       [cdkDropListData]="[board]"
-      (cdkDropListDropped)="drop($event)"
+      (cdkDropListDropped)="taskMove($event)"
       cdkDropList>
 
       <div *ngFor="let task of board.tasks; let taskIndex = index" cdkDrag [cdkDragData]="[task, taskIndex]">

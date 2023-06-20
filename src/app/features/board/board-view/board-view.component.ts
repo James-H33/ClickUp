@@ -1,22 +1,22 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray, transferArrayItem } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
-import { TaskComponent } from "./task/task.component";
 import { IconComponent } from "../../../shared/ui/icon/icon.component";
+import { TaskComponent } from "./task/task.component";
 
 @Component({
-    standalone: true,
-    selector: 'cu-board-view',
-    templateUrl: './board-view.component.html',
-    styleUrls: ['./board-view.component.scss'],
-    imports: [
-        CommonModule,
-        TaskComponent,
-        CdkDropList,
-        CdkDrag,
-        CdkDropListGroup,
-        IconComponent
-    ]
+  standalone: true,
+  selector: 'cu-board-view',
+  templateUrl: './board-view.component.html',
+  styleUrls: ['./board-view.component.scss'],
+  imports: [
+    CommonModule,
+    TaskComponent,
+    CdkDropList,
+    CdkDrag,
+    CdkDropListGroup,
+    IconComponent
+  ]
 })
 export class BoardViewComponent {
 
@@ -27,22 +27,19 @@ export class BoardViewComponent {
     { id: 4, name: 'Done', tasks: [], color: '#6bc950' }
   ];
 
-  public drop(event: CdkDragDrop<any[]>) {
-    console.log(event.container.id);
-    console.log(event.previousContainer.id);
-
+  public taskMove(event: CdkDragDrop<any[]>) {
     let previousContainerId = +event.previousContainer.id;
     let containerId = +event.container.id;
 
     if (previousContainerId === containerId) {
-      const board = this.boards[containerId - 1];
+      const board = this.boards[containerId];
       moveItemInArray(board.tasks, event.previousIndex, event.currentIndex);
     } else {
       let [prevBoard]: any = event.previousContainer.data;
       let [task, taskIndex] = event.item.data;
       let insertIndex = event.currentIndex;
 
-      const board = this.boards[containerId - 1];
+      const board = this.boards[containerId];
       const tasks = board.tasks;
       let pre = tasks.slice(0, insertIndex);
       let post = tasks.slice(insertIndex);
