@@ -2,15 +2,15 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
-  { path: '', redirectTo: 'board', pathMatch: 'full' },
+  { path: '', redirectTo: 'v/board', pathMatch: 'full' },
   {
-    path: 'board',
-    loadChildren: () => import('./features/board/board.module').then(m => m.BoardModule)
+    path: 'v',
+    loadChildren: () => import('./features/views/views.module').then(m => m.ViewsModule)
   }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes)],
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule { }

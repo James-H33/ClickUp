@@ -10,7 +10,7 @@ import { Store } from '@ngrx/store';
 import { selectMenu, selectSimpleMenu } from '../../stores/shared/shared.selector';
 import { SharedActions } from '../../stores/shared/shared.actions';
 import { combineLatest, map, tap } from 'rxjs';
-import { MenuControlDirective } from '../../directives/menu-control.directive';
+import { MenuControlDirective } from '../../directives/menu-control/menu-control.directive';
 
 @Component({
   standalone: true,

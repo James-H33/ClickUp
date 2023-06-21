@@ -17,4 +17,13 @@ button {
   &:focus {
     outline: none;
   }
+
+  &.btn {
+    padding: 5px 10px;
+  }
+
+  &.primary {
+    color: #fff;
+    background-color: var(--theme-main-color);
+  }
 }

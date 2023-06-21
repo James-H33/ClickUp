@@ -1,0 +1,14 @@
+<div class="cu-new-task" appOutsideClick (clickOutside)="cancel()">
+    <input
+      #EditInput
+      type="text"
+      [(ngModel)]="name"
+      (keyup.enter)="save()"
+      placeholder="Enter Task Name"
+    />
+
+    <div class="cu-new-task__actions">
+      <button class="btn" (click)="cancel()">Cancel</button>
+      <button class="btn primary" (click)="save()">Done</button>
+    </div>
+</div>
