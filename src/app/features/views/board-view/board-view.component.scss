@@ -2,6 +2,7 @@
   overflow-x: scroll;
   height: calc(100vh - 50px);
   width: 100%;
+  cursor: grab;
 }
 
 .cu-board-header {
@@ -49,7 +50,6 @@
     padding: 0px 8px;
     border: 1px solid rgba(174,172,176,.45);
   }
-
 }
 
 .cu-board-dashboard {
@@ -65,7 +65,6 @@
     display: flex;
     flex-direction: column;
     gap: 15px;
-    min-height: 50vh;
 
     &:hover {
       .cu-board-dashboard__add-task {

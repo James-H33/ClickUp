@@ -6,4 +6,11 @@
   border-radius: 6px;
   background-color: #fff;
   cursor: pointer;
+
+  input {
+    border: none;
+    padding: 5px;
+    outline: none;
+    width: 100%;
+  }
 }

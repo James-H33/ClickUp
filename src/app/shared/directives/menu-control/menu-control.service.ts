@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Store } from "@ngrx/store";
-import { IAppState } from "../stores/app-state";
-import { SharedActions } from "../stores/shared/shared.actions";
+import { IAppState } from "../../stores/app-state";
+import { SharedActions } from "../../stores/shared/shared.actions";
 
 @Injectable({
   providedIn: 'root'

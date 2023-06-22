@@ -24,7 +24,7 @@
     <div class="cu-views__group">
       <div class="cu-views__group-divider"></div>
 
-      <div class="cu-views__group-item active">
+      <div [routerLink]="['v', 'list']" class="cu-views__group-item" [class.active]="vm.view === 'list'">
         <div>
           <cu-icon type="list" />
         </div>
@@ -36,7 +36,7 @@
 
       <div class="cu-views__group-divider"></div>
 
-      <div class="cu-views__group-item">
+      <div [routerLink]="['v', 'board']" class="cu-views__group-item" [class.active]="vm.view === 'board'">
         <div>
           <cu-icon type="board" />
         </div>
