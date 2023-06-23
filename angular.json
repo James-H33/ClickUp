@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "click-up": {
+    "ClickUp": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,8 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/click-up",
+            "outputPath": "dist/ClickUp",
+            "deployUrl": "/",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": [
@@ -37,6 +38,8 @@
           },
           "configurations": {
             "production": {
+              "deployUrl": "/ClickUp/",
+              "baseHref": "/ClickUp/",
               "budgets": [
                 {
                   "type": "initial",
