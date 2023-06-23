@@ -12,13 +12,6 @@ import { selectIsUserLoading } from './shared/stores/user/user.selector';
   styleUrls: ['./app.component.scss']
 })
 export class AppComponent implements OnInit {
-  title = 'click-up';
-
-  public isUserLoading$ = this.store.select(selectIsUserLoading)
-    .pipe(
-      tap(isLoading => console.log('isUserLoading', isLoading))
-    )
-
   public isSideMenuOpen = true;
   public isSideMenuOpen$ = this.store.select(selectMenu)
     .pipe(
