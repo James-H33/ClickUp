@@ -1,11 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, EventEmitter, Input, OnInit, Output, ViewChild } from '@angular/core';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ITask } from '../board-view.component';
-
-/*
-  - When Editing, if no input added and user clicks outsie of input, then task is deleted
-*/
 
 @Component({
   selector: 'cu-task',
@@ -17,7 +13,7 @@ import { ITask } from '../board-view.component';
     FormsModule
   ]
 })
-export class TaskComponent implements OnInit {
+export class TaskComponent {
   @Output()
   public editDone = new EventEmitter();
 
@@ -30,11 +26,8 @@ export class TaskComponent implements OnInit {
     return this._task;
   }
 
+  @Input()
+  public workspace: any;
+
   private _task: ITask = { id: '', name: '' };
-
-  constructor() { }
-
-  ngOnInit() {
-  }
-
 }

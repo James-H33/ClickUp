@@ -18,13 +18,13 @@ export class MenuControlService {
     this.isSideMenuOpen = open;
 
     if (this.isSideMenuOpen) {
-      this.store.dispatch(SharedActions.SetSimpleMenu(true));
+      this.store.dispatch(SharedActions.SetSimpleMenu({ isOpen: true }));
       clearTimeout(this.timer);
       return;
     }
 
     this.timer = setTimeout(() => {
-      this.store.dispatch(SharedActions.SetSimpleMenu(false));
+      this.store.dispatch(SharedActions.SetSimpleMenu({ isOpen: false }));
     });
   }
 }

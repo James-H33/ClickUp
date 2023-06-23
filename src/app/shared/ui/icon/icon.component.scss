@@ -1,6 +1,10 @@
 :host {
   --fill-color: #2a2e34;
 
+  &.passive {
+    --fill-color: var(--light-passive-text-color);
+  }
+
   &.primary {
     --fill-color: var(--theme-main-color);
   }
@@ -17,6 +21,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  fill: var(--fill-color);
 
   &:hover {
     fill: var(--hover-color);

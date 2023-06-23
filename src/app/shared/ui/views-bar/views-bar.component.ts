@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
+import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { combineLatest, filter, map, tap } from 'rxjs';
+import { combineLatest, debounce, debounceTime, filter, from, map, scan, startWith, tap, zip } from 'rxjs';
+import { MenuControlDirective } from '../../directives/menu-control/menu-control.directive';
 import { IAppState } from '../../stores/app-state';
 import { SharedActions } from '../../stores/shared/shared.actions';
 import { selectMenu, selectSimpleMenu } from '../../stores/shared/shared.selector';
 import { IconComponent } from '../icon/icon.component';
-import { MenuControlDirective } from '../../directives/menu-control/menu-control.directive';
-import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/router';
 
 @Component({
   standalone: true,
@@ -24,16 +24,18 @@ import { ActivatedRoute, NavigationEnd, Router, RouterModule } from '@angular/ro
 export class ViewsBarComponent implements OnInit {
   public isSideMenuOpen$ = this.store.select(selectMenu);
   public isSimpleMenuOpen$ = this.store.select(selectSimpleMenu);
-  public activeRoute$ = this.router.events.pipe(
-    filter((e: any) => e instanceof NavigationEnd),
-    map((v: any) => {
-      if (v.url?.includes('board')) {
-        return 'board';
-      }
+  public activeRoute$ = this.router.events
+    .pipe(
+      filter(e => e instanceof NavigationEnd),
+      startWith({ url: this.router.url }),
+      map((v: any) => {
+        if (v.url?.includes('board')) {
+          return 'board';
+        }
 
-      return 'list';
-    }),
-  );
+        return 'list';
+      }),
+    );
 
   public vm: any = {};
   public vm$ = combineLatest([
@@ -61,19 +63,15 @@ export class ViewsBarComponent implements OnInit {
   }
 
   public openSideMenu() {
-    this.store.dispatch(SharedActions.SetMenu(true));
-    this.store.dispatch(SharedActions.SetSimpleMenu(false));
+    this.store.dispatch(SharedActions.SetMenu({ isOpen: true }));
+    this.store.dispatch(SharedActions.SetSimpleMenu({ isOpen: false }));
   }
 
   public sideBarIconHovered() {
-    this.store.dispatch(SharedActions.SetSimpleMenu(true));
+    this.store.dispatch(SharedActions.SetSimpleMenu({ isOpen: true }));
   }
 
   public sideBarIconUnhovered() {
-    this.store.dispatch(SharedActions.SetSimpleMenu(false));
-  }
-
-  public setMenu(isOpen: boolean) {
-
+    this.store.dispatch(SharedActions.SetSimpleMenu({ isOpen: false }));
   }
 }
