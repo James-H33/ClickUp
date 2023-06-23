@@ -62,6 +62,6 @@ export class SidebarComponent {
   }
 
   public collapseSidebar() {
-    this.store.dispatch(SharedActions.SetMenu(false));
+    this.store.dispatch(SharedActions.SetMenu({ isOpen: false }));
   }
 }

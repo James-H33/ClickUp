@@ -1,5 +1,10 @@
 <ng-container *ngIf="isSideMenuOpen$ | async"></ng-container>
-<div class="cu-root-container" [class.side-bar-collapsed]="!isSideMenuOpen">
+
+<h1 *ngIf="isUserLoading$ | async">
+  Loading...
+</h1>
+
+<div *ngIf="!(isUserLoading$ | async)" class="cu-root-container" [class.side-bar-collapsed]="!isSideMenuOpen">
   <cu-sidebar />
 
   <div class="cu-root-content">

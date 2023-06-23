@@ -1,16 +1,23 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { IAppState } from './shared/stores/app-state';
 import { selectMenu } from './shared/stores/shared/shared.selector';
 import { tap } from 'rxjs';
+import { UserActions } from './shared/stores/user/user.actions';
+import { selectIsUserLoading } from './shared/stores/user/user.selector';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements OnInit {
   title = 'click-up';
+
+  public isUserLoading$ = this.store.select(selectIsUserLoading)
+    .pipe(
+      tap(isLoading => console.log('isUserLoading', isLoading))
+    )
 
   public isSideMenuOpen = true;
   public isSideMenuOpen$ = this.store.select(selectMenu)
@@ -21,4 +28,8 @@ export class AppComponent {
   constructor(
     private store: Store<IAppState>
   ) { }
+
+  public ngOnInit() {
+    this.store.dispatch(UserActions.GetUser({ id: 12 }));
+  }
 }

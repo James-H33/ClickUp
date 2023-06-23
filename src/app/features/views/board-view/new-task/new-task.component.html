@@ -1,14 +1,36 @@
 <div class="cu-new-task" appOutsideClick (clickOutside)="cancel()">
-    <input
-      #EditInput
-      type="text"
-      [(ngModel)]="name"
-      (keyup.enter)="save()"
-      placeholder="Enter Task Name"
-    />
+  <input
+    #EditInput
+    type="text"
+    [(ngModel)]="name"
+    (keyup.enter)="save()"
+    placeholder="Enter Task Name"
+  />
 
-    <div class="cu-new-task__actions">
-      <button class="btn" (click)="cancel()">Cancel</button>
-      <button class="btn primary" (click)="save()">Done</button>
-    </div>
+  <div class="cu-new-task__actions">
+    <button class="btn" (click)="cancel()">Cancel</button>
+    <button class="btn primary" (click)="save()">Done</button>
+  </div>
+
+  <div class="cu-new-task__control">
+    <span class="cu-new-task__control-up cu-new-task_arrow" (click)="updateActivePosition($event, 'top')">
+      <cu-icon
+        class="hover-primary"
+        [class.passive]="activePosition === 'bottom'"
+        [class.primary]="activePosition === 'top'"
+        type="arrow-up"
+        [size]="15"
+      ></cu-icon>
+    </span>
+
+    <span class="cu-new-task__control-down cu-new-task_arrow" (click)="updateActivePosition($event, 'bottom')">
+      <cu-icon
+        class="hover-primary passive"
+        [class.passive]="activePosition === 'top'"
+        [class.primary]="activePosition === 'bottom'"
+        type="arrow-down"
+        [size]="15"
+      ></cu-icon>
+    </span>
+  </div>
 </div>

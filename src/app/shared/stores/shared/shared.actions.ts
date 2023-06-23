@@ -1,13 +1,13 @@
-import { createAction } from '@ngrx/store';
+import { createAction, props } from '@ngrx/store';
 
 export const SetMenu = createAction(
   '[Shared] Set Menu',
-    (isOpen: boolean) => ({ isOpen })
+    props<{ isOpen: boolean }>()
 )
 
 export const SetSimpleMenu = createAction(
   '[Shared] Set Simple Menu',
-    (isOpen: boolean) => ({ isOpen })
+    props<{ isOpen: boolean }>()
 )
 
 export const SharedActions = {

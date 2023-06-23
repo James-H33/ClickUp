@@ -32,12 +32,6 @@ export class IconComponent {
   @Input()
   public size = 12;
 
-  public get hoverColor(): string {
-    return this._hoverColor;
-  }
-
-  private _hoverColor: string = '';
-
   constructor(
     private element: ElementRef
   ) { }

@@ -7,6 +7,31 @@
   background-color: #fff;
   cursor: pointer;
   border: 1px solid var(--theme-main-color);
+  position: relative;
+
+  .cu-new-task__control {
+    display: flex;
+    justify-content: center;
+    height: 40px;
+    width: 7px;
+    position: absolute;
+    right: -4px;
+    top: calc(50% - 23px);
+    background: #fff;
+    z-index: 1;
+
+    .cu-new-task__control-up {
+      position: absolute;
+      top: -5px;
+      line-height: 0;
+    }
+
+    .cu-new-task__control-down {
+      position: absolute;
+      bottom: -4px;
+      line-height: 0;
+    }
+  }
 
   input {
     border: none;
@@ -17,9 +42,10 @@
 
   .cu-new-task__actions {
     display: flex;
-    justify-content: space-between;
+    justify-content: flex-end;
     align-items: center;
     margin-top: 10px;
+    column-gap: 5px;
 
     button {
       font-size: 11px;

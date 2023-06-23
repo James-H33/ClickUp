@@ -21,6 +21,12 @@ export interface ITask {
   isEditing?: boolean;
 }
 
+export class TaskCreationState {
+  public boardId: string = '';
+  public position: string = 'bottom';
+  public task: ITask | null = null;
+}
+
 @Component({
   standalone: true,
   selector: 'cu-board-view',
@@ -40,6 +46,8 @@ export interface ITask {
 })
 export class BoardViewComponent {
   public boards: IBoard[] = MockBoardData;
+  public taskCreateState = new TaskCreationState();
+  public workspace = { name: 'Work' };
 
   public taskMove(event: CdkDragDrop<any[]>) {
     let previousContainerId = +event.previousContainer.id;
@@ -53,38 +61,47 @@ export class BoardViewComponent {
       let [task, taskIndex] = event.item.data;
       let insertIndex = event.currentIndex;
 
-      const board = this.boards[containerId];
-      const tasks = board.tasks;
+      const targetBoard = this.boards[containerId];
+      const tasks = targetBoard.tasks;
       let pre = tasks.slice(0, insertIndex);
       let post = tasks.slice(insertIndex);
 
-      prevBoard.tasks = prevBoard.tasks.filter((t: any, i: number) => i !== taskIndex);
-
-      board.tasks = [...pre, task, ...post];
+      prevBoard.tasks = prevBoard.tasks.filter((t: ITask, i: number) => i !== taskIndex);
+      targetBoard.tasks = [...pre, task, ...post];
     }
   }
 
-  public createNewTask(board: any) {
-    board.tasks.push({
+  public createNewTask(board: IBoard) {
+    this.taskCreateState.boardId = board.id;
+    this.taskCreateState.position = 'bottom';
+
+    this.taskCreateState.task = {
       id: makeGuid(),
-      name: '',
-      isEditing: true
-    });
+      name: ''
+    }
   }
 
-  public taskEditDone(name: string, task: ITask, board: IBoard) {
+  public taskEditDone(name: string, board: IBoard) {
     if (name.length === 0) {
-      this.deleteTask(board, task);
+      this.taskCreateState = new TaskCreationState();
       return;
     }
 
-    task = { ...task, name, isEditing: false };
-    board.tasks = board.tasks.map(t => t.id === task.id ? task : t);
-    board = { ...board };
-    this.boards = this.boards.map(b => b.id === board.id ? board : b);
+    const task: ITask = {
+      ...this.taskCreateState.task as any,
+      name
+    };
+
+    if (this.taskCreateState.position === 'bottom') {
+      board.tasks = [...board.tasks, task];
+    } else {
+      board.tasks = [task, ...board.tasks];
+    }
+
+    this.taskCreateState = new TaskCreationState();
   }
 
-  private deleteTask(board: IBoard, task: ITask) {
-    board.tasks = board.tasks.filter(t => t.id !== task.id);
+  public updateActivePosition(position: string) {
+    this.taskCreateState.position = position;
   }
 }
