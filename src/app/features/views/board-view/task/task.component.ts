@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { ITask } from '../board-view.component';
+import { ITask } from 'src/app/shared/models';
 
 @Component({
   selector: 'cu-task',

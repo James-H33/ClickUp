@@ -2,7 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { combineLatest, debounce, debounceTime, filter, from, map, scan, startWith, tap, zip } from 'rxjs';
+import { combineLatest, filter, map, startWith, tap } from 'rxjs';
 import { MenuControlDirective } from '../../directives/menu-control/menu-control.directive';
 import { IAppState } from '../../stores/app-state';
 import { SharedActions } from '../../stores/shared/shared.actions';
