@@ -1,10 +1,9 @@
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
+import { tap } from 'rxjs';
 import { IAppState } from './shared/stores/app-state';
 import { selectMenu } from './shared/stores/shared/shared.selector';
-import { tap } from 'rxjs';
 import { UserActions } from './shared/stores/user/user.actions';
-import { selectIsUserLoading } from './shared/stores/user/user.selector';
 
 @Component({
   selector: 'app-root',

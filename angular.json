@@ -69,10 +69,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "click-up:build:production"
+              "browserTarget": "ClickUp:build:production"
             },
             "development": {
-              "browserTarget": "click-up:build:development"
+              "browserTarget": "ClickUp:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -80,7 +80,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "click-up:build"
+            "browserTarget": "ClickUp:build"
           }
         },
         "test": {

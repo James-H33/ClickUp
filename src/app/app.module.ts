@@ -11,6 +11,9 @@ import { ViewsBarComponent } from './shared/ui/views-bar/views-bar.component';
 import { UserEffects } from './shared/stores/user/user.effects';
 import { EffectsModule } from '@ngrx/effects';
 import { userReducer } from './shared/stores/user/user.reducer';
+import { BoardEffects } from './shared/stores/board/board.effects';
+import { boardReducer } from './shared/stores/board/board.reducer';
+import { IAppState } from './shared/stores/app-state';
 
 @NgModule({
   declarations: [
@@ -26,14 +29,16 @@ import { userReducer } from './shared/stores/user/user.reducer';
     ViewsBarComponent,
 
     // Store
-    StoreModule.forRoot({
+    StoreModule.forRoot<IAppState>({
       shared: sharedReducer,
-      user: userReducer
+      user: userReducer,
+      board: boardReducer
     }),
 
     // Effects
     EffectsModule.forRoot(
-      UserEffects
+      UserEffects,
+      BoardEffects
     ),
 
   ],

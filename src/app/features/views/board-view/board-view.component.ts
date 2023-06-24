@@ -1,28 +1,20 @@
 import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
+import { tap } from 'rxjs';
 import { HorizontalControlDirective, NoPropagationDirective } from 'src/app/shared/directives';
+import { IBoard, IBoardColumn, ITask } from 'src/app/shared/models';
+import { IAppState } from 'src/app/shared/stores/app-state';
+import { BoardActions } from 'src/app/shared/stores/board/board.actions';
+import { selectBoardState } from 'src/app/shared/stores/board/board.selector';
 import { makeGuid } from 'src/app/shared/utils/make-guid';
 import { IconComponent } from "../../../shared/ui/icon/icon.component";
-import { MockBoardData } from './mock-board-data';
-import { TaskComponent } from "./task/task.component";
 import { NewTaskComponent } from './new-task/new-task.component';
-
-export interface IBoard {
-  id: string;
-  name: string;
-  tasks: ITask[];
-  color: string;
-}
-
-export interface ITask {
-  id: string;
-  name: string;
-  isEditing?: boolean;
-}
+import { TaskComponent } from "./task/task.component";
 
 export class TaskCreationState {
-  public boardId: string = '';
+  public columnId: string = '';
   public position: string = 'bottom';
   public task: ITask | null = null;
 }
@@ -44,35 +36,52 @@ export class TaskCreationState {
     NoPropagationDirective
   ]
 })
-export class BoardViewComponent {
-  public boards: IBoard[] = MockBoardData;
+export class BoardViewComponent implements OnInit {
+  public board$ = this.store.select(selectBoardState)
+    .pipe(
+      tap(b => this.board = b)
+    );
+
+  public board: IBoard = null;
   public taskCreateState = new TaskCreationState();
   public workspace = { name: 'Work' };
 
-  public taskMove(event: CdkDragDrop<any[]>) {
-    let previousContainerId = +event.previousContainer.id;
-    let containerId = +event.container.id;
+  constructor(
+    private store: Store<IAppState>
+  ) { }
 
-    if (previousContainerId === containerId) {
-      const board = this.boards[containerId];
-      moveItemInArray(board.tasks, event.previousIndex, event.currentIndex);
+  public ngOnInit(): void {
+    this.store.dispatch(BoardActions.LoadBoard());
+  }
+
+  public taskMove(event: CdkDragDrop<any>) {
+    let previousContainerId = event.previousContainer.id;
+    let nextContainerId = event.container.id;
+
+    if (previousContainerId === nextContainerId) {
+      const column = this.board.columns.find((c) => c.id === nextContainerId);
+      this.store.dispatch(BoardActions.MoveTaskWithinColumn({
+        column,
+        previousIndex: event.previousIndex,
+        nextIndex: event.currentIndex
+      }));
     } else {
-      let [prevBoard]: any = event.previousContainer.data;
-      let [task, taskIndex] = event.item.data;
+      let targetColumn = this.board.columns.find((c) => c.id === nextContainerId);
+      let prevColumn = event.previousContainer.data;
+      let [ task ] = event.item.data;
       let insertIndex = event.currentIndex;
 
-      const targetBoard = this.boards[containerId];
-      const tasks = targetBoard.tasks;
-      let pre = tasks.slice(0, insertIndex);
-      let post = tasks.slice(insertIndex);
-
-      prevBoard.tasks = prevBoard.tasks.filter((t: ITask, i: number) => i !== taskIndex);
-      targetBoard.tasks = [...pre, task, ...post];
+      this.store.dispatch(BoardActions.MoveTaskToNewColumn({
+        prev: prevColumn,
+        target: targetColumn,
+        task,
+        insertIndex
+      }));
     }
   }
 
-  public createNewTask(board: IBoard) {
-    this.taskCreateState.boardId = board.id;
+  public createNewTask(col: IBoardColumn) {
+    this.taskCreateState.columnId = col.id;
     this.taskCreateState.position = 'bottom';
 
     this.taskCreateState.task = {
@@ -81,7 +90,7 @@ export class BoardViewComponent {
     }
   }
 
-  public taskEditDone(name: string, board: IBoard) {
+  public taskEditDone(name: string, column: IBoardColumn) {
     if (name.length === 0) {
       this.taskCreateState = new TaskCreationState();
       return;
@@ -93,9 +102,9 @@ export class BoardViewComponent {
     };
 
     if (this.taskCreateState.position === 'bottom') {
-      board.tasks = [...board.tasks, task];
+      column.tasks = [...column.tasks, task];
     } else {
-      board.tasks = [task, ...board.tasks];
+      column.tasks = [task, ...column.tasks];
     }
 
     this.taskCreateState = new TaskCreationState();

@@ -1,42 +1,44 @@
+<ng-container *ngIf="board$ | async"></ng-container>
+
 <div class="cu-board" appHorizontalControl>
   <div class="cu-board-header">
     <div
       class="cu-board-header__item"
-      *ngFor="let board of boards"
-      [ngStyle]="{ 'border-top-color': board.color }"
+      *ngFor="let column of board?.columns"
+      [ngStyle]="{ 'border-top-color': column.color }"
     >
       <div class="cu-board-header__item-title">
-        {{ board.name }}
+        {{ column.name }}
       </div>
 
       <div class="cu-board-header__item-tasks-count">
-        {{ board.tasks.length }}
+        {{ column.tasks.length }}
       </div>
     </div>
   </div>
 
   <div class="cu-board-dashboard" cdkDropListGroup>
     <div
-      *ngFor="let board of boards; let i = index"
+      *ngFor="let column of board?.columns"
       class="cu-board-dashboard__column"
-      [id]="i.toString()"
-      [cdkDropListData]="[board]"
+      [id]="column.id"
+      [cdkDropListData]="column"
       (cdkDropListDropped)="taskMove($event)"
       cdkDropList
     >
       <section
-        *ngIf="taskCreateState.boardId === board.id && taskCreateState.position === 'top'"
+        *ngIf="taskCreateState.columnId === column.id && taskCreateState.position === 'top'"
         class="cu-board-dashboard__new-task-top"
       >
         <cu-new-task
           [activePosition]="taskCreateState.position"
           (activePositonChange)="updateActivePosition($event)"
-          (editDone)="taskEditDone($event, board)"
+          (editDone)="taskEditDone($event, column)"
         >
         </cu-new-task>
       </section>
 
-      <ng-container *ngFor="let task of board.tasks; let taskIndex = index">
+      <ng-container *ngFor="let task of column.tasks; let taskIndex = index">
         <div
           cdkDrag
           [cdkDragData]="[task, taskIndex]"
@@ -51,20 +53,20 @@
       </ng-container>
 
       <section
-        *ngIf="taskCreateState.boardId === board.id && taskCreateState.position === 'bottom'"
+        *ngIf="taskCreateState.columnId === board.id && taskCreateState.position === 'bottom'"
         class="cu-board-dashboard__new-task-bottom"
       >
         <cu-new-task
           [activePosition]="taskCreateState.position"
           (activePositonChange)="updateActivePosition($event)"
-          (editDone)="taskEditDone($event, board)"
+          (editDone)="taskEditDone($event, column)"
         >
         </cu-new-task>
       </section>
 
       <button
         class="cu-board-dashboard__add-task"
-        (click)="createNewTask(board)"
+        (click)="createNewTask(column)"
         appNoPropagation
         stopEvent="click"
       >
