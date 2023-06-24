@@ -92,5 +92,32 @@ export const boardReducer = createReducer(
       ...s,
       board: updatedBoard
     }
+  }),
+
+  on(BoardActions.AddTask, (s, { column, task, position }) => {
+    let tasks = column.tasks;
+    let newTasks = [];
+
+    if (position === 'bottom') {
+      newTasks = [...tasks, task];
+    } else {
+      newTasks = [task, ...tasks];
+    }
+
+    const updatedColumn = { ...column, tasks: newTasks };
+    const updatedColumns = s.board.columns.map(c => {
+      if (c.id === column.id) {
+        return updatedColumn;
+      }
+
+      return c;
+    });
+
+    const updatedBoard = { ...s.board, columns: updatedColumns };
+
+    return {
+      ...s,
+      board: updatedBoard
+    }
   })
 );

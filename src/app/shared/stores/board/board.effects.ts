@@ -32,33 +32,34 @@ export class BoardEffects {
     private actions$: Actions
   ) { }
 
-  getBoard$ = createEffect(() => this.actions$.pipe(
-    ofType(BoardActions.LoadBoard),
-    switchMap(() => {
-      return this.loadBoards()
-        .pipe(
-          map((board: any) => {
-            return BoardActions.LoadBoardSuccess({ board })
-          }),
-          catchError(() => of({ type: 'error' }))
-        )
-    })
-  ))
+  getBoard$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(BoardActions.LoadBoard),
+      switchMap(() => {
+        return this.loadBoards()
+          .pipe(
+            map((board: any) => {
+              return BoardActions.LoadBoardSuccess({ board })
+            }),
+            catchError(() => of({ type: 'error' }))
+          )
+      })
+    ))
 
-  saveBoard$ = createEffect(() => this.actions$.pipe(
-    ofType(BoardActions.MoveTaskToNewColumn, BoardActions.MoveTaskWithinColumn),
-    switchMap(() => {
-      return this.store.select(selectBoardState)
-        .pipe(
-          map((board: any) => {
-            localStorage.setItem('board', JSON.stringify(board));
-            console.log('saveBoard$ board', board);
-            return board;
-          })
-        )
-    }),
-    map(() => BoardActions.SaveBoardToStorageSuccess()),
-  ));
+  saveBoard$ = createEffect(() => this.actions$
+    .pipe(
+      ofType(BoardActions.MoveTaskToNewColumn, BoardActions.MoveTaskWithinColumn, BoardActions.AddTask),
+      switchMap(() => {
+        return this.store.select(selectBoardState)
+          .pipe(
+            map((board: any) => {
+              localStorage.setItem('board', JSON.stringify(board));
+              return board;
+            })
+          )
+      }),
+      map(() => BoardActions.SaveBoardToStorageSuccess())
+    ))
 
   private loadBoards() {
     return loadBoards()

@@ -1,4 +1,4 @@
-import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup, moveItemInArray } from '@angular/cdk/drag-drop';
+import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cdk/drag-drop';
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
@@ -82,7 +82,6 @@ export class BoardViewComponent implements OnInit {
 
   public createNewTask(col: IBoardColumn) {
     this.taskCreateState.columnId = col.id;
-    this.taskCreateState.position = 'bottom';
 
     this.taskCreateState.task = {
       id: makeGuid(),
@@ -101,12 +100,9 @@ export class BoardViewComponent implements OnInit {
       name
     };
 
-    if (this.taskCreateState.position === 'bottom') {
-      column.tasks = [...column.tasks, task];
-    } else {
-      column.tasks = [task, ...column.tasks];
-    }
+    const position = this.taskCreateState.position;
 
+    this.store.dispatch(BoardActions.AddTask({ column, task, position }));
     this.taskCreateState = new TaskCreationState();
   }
 
