@@ -4,6 +4,7 @@ import { tap } from 'rxjs';
 import { IAppState } from './shared/stores/app-state';
 import { selectMenu } from './shared/stores/shared/shared.selector';
 import { UserActions } from './shared/stores/user/user.actions';
+import { selectActiveEdit } from './shared/stores/board/board.selector';
 
 @Component({
   selector: 'app-root',
@@ -16,6 +17,8 @@ export class AppComponent implements OnInit {
     .pipe(
       tap(isOpen => this.isSideMenuOpen = isOpen)
     );
+
+  public activeTaskEdit$ = this.store.select(selectActiveEdit);
 
   constructor(
     private store: Store<IAppState>

@@ -37,9 +37,18 @@ const SaveBoardToStorageSuccess  = createAction(
   '[Board] Save Board to Storage Success'
 );
 
-const AddTask  = createAction(
+const AddTask = createAction(
   '[Board] Add Task',
   props<{ column: IBoardColumn, task: ITask, position: string }>()
+);
+
+const SetEditTask = createAction(
+  '[Board] Set Edit Task',
+  props<{ column: IBoardColumn, task: ITask }>()
+);
+
+const CloseEditTask = createAction(
+  '[Board] Close Edit Task'
 );
 
 export const BoardActions = {
@@ -51,5 +60,7 @@ export const BoardActions = {
   SaveBoardToStorageSuccess,
   MoveTaskWithinColumn,
   MoveTaskToNewColumn,
-  AddTask
+  AddTask,
+  SetEditTask,
+  CloseEditTask
 }

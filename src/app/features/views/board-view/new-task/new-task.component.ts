@@ -34,14 +34,14 @@ export class NewTaskComponent {
   public activePosition = 'bottom';
 
   @Output()
-  public editDone = new EventEmitter();
+  public done = new EventEmitter();
 
   public save() {
-    this.editDone.emit(this.name);
+    this.done.emit(this.name);
   }
 
   public cancel() {
-    this.editDone.emit('');
+    this.done.emit('');
   }
 
   public updateActivePosition(e: any, position: string) {

@@ -14,11 +14,14 @@ import { userReducer } from './shared/stores/user/user.reducer';
 import { BoardEffects } from './shared/stores/board/board.effects';
 import { boardReducer } from './shared/stores/board/board.reducer';
 import { IAppState } from './shared/stores/app-state';
+import { EditTaskComponent } from "./features/views/components/edit-task/edit-task.component";
 
 @NgModule({
   declarations: [
     AppComponent,
   ],
+  providers: [],
+  bootstrap: [AppComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -27,6 +30,7 @@ import { IAppState } from './shared/stores/app-state';
     // Components
     SidebarComponent,
     ViewsBarComponent,
+    EditTaskComponent,
 
     // Store
     StoreModule.forRoot<IAppState>({
@@ -34,15 +38,8 @@ import { IAppState } from './shared/stores/app-state';
       user: userReducer,
       board: boardReducer
     }),
-
     // Effects
-    EffectsModule.forRoot(
-      UserEffects,
-      BoardEffects
-    ),
-
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    EffectsModule.forRoot(UserEffects, BoardEffects),
+  ]
 })
 export class AppModule { }

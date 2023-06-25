@@ -1,0 +1,98 @@
+.cu-status-btn {
+  --current-status-color: #fff;
+
+  .cu-status-btn-dropdown {
+    padding: 10px;
+    padding-left: 25px;
+
+    .cu-status-btn-dropdown__status {
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      margin: 0 10px 0 0;
+      border-radius: 3px;
+      cursor: pointer;
+      transition: all 0.2s ease-in-out;
+
+      &:hover {
+        box-shadow: 0 0 0 2px var(--current-status-color);
+
+        .cu-status-btn-dropdown__status-divider {
+          height: calc(100% + 4px);
+        }
+      }
+
+      .cu-status-btn-dropdown__status-current {
+        color: #fff;
+        padding: 5px 15px;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+        background: var(--current-status-color);
+      }
+
+      .cu-status-btn-dropdown__status-divider {
+        width: 1px;
+        height: 100%;
+        background-color: #dcdfe4;
+        transition: all 0.2s ease-in-out;
+      }
+
+      .cu-status-btn-dropdown__status-next {
+        padding: 5px 10px;
+        border-radius: 0;
+        border-top-right-radius: 3px;
+        border-bottom-right-radius: 3px;
+        background: var(--current-status-color);
+
+        ::ng-deep {
+          cu-icon {
+            --fill-color: #fff;
+
+            &:hover {
+              --fill-color: #fff;
+            }
+          }
+        }
+      }
+    }
+  }
+}
+
+::ng-deep {
+  .cu-status-btn-dropdown__options {
+    margin-top: 10px;
+    border-radius: 6px;
+    background: #fff;
+    box-shadow: 0 1px 10px 0 rgba(0, 0, 0, .25);
+    padding: 15px 10px;
+    display: flex;
+    flex-direction: column;
+    row-gap: 5px;
+
+    .cu-status-btn-dropdown__option {
+      text-transform: uppercase;
+      padding: 3px 8px;
+      border-radius: 6px;
+
+      &:hover {
+        background-color: #e8eaed;
+      }
+
+      .cu-status-btn-dropdown__option-status {
+        display: flex;
+        align-items: center;
+        column-gap: 5px;
+        cursor: pointer;
+
+        .cu-status-btn-dropdown__option-status-color {
+          width: 10px;
+          height: 10px;
+        }
+
+        .cu-status-btn-dropdown__option-status-text {
+          font-size: 12px;
+        }
+      }
+    }
+  }
+}

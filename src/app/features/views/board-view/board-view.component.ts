@@ -12,6 +12,7 @@ import { makeGuid } from 'src/app/shared/utils/make-guid';
 import { IconComponent } from "../../../shared/ui/icon/icon.component";
 import { NewTaskComponent } from './new-task/new-task.component';
 import { TaskComponent } from "./task/task.component";
+import { EditTaskComponent } from "../components/edit-task/edit-task.component";
 
 export class TaskCreationState {
   public columnId: string = '';
@@ -33,7 +34,8 @@ export class TaskCreationState {
     CdkDropListGroup,
     IconComponent,
     HorizontalControlDirective,
-    NoPropagationDirective
+    NoPropagationDirective,
+    EditTaskComponent
   ]
 })
 export class BoardViewComponent implements OnInit {
@@ -68,7 +70,7 @@ export class BoardViewComponent implements OnInit {
     } else {
       let targetColumn = this.board.columns.find((c) => c.id === nextContainerId);
       let prevColumn = event.previousContainer.data;
-      let [ task ] = event.item.data;
+      let [task] = event.item.data;
       let insertIndex = event.currentIndex;
 
       this.store.dispatch(BoardActions.MoveTaskToNewColumn({
@@ -89,7 +91,7 @@ export class BoardViewComponent implements OnInit {
     }
   }
 
-  public taskEditDone(name: string, column: IBoardColumn) {
+  public taskCreationDone(name: string, column: IBoardColumn) {
     if (name.length === 0) {
       this.taskCreateState = new TaskCreationState();
       return;
@@ -104,6 +106,10 @@ export class BoardViewComponent implements OnInit {
 
     this.store.dispatch(BoardActions.AddTask({ column, task, position }));
     this.taskCreateState = new TaskCreationState();
+  }
+
+  public editTask(column: IBoardColumn, task: ITask) {
+    this.store.dispatch(BoardActions.SetEditTask({ column, task }));
   }
 
   public updateActivePosition(position: string) {

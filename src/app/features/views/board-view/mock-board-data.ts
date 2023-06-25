@@ -31,7 +31,7 @@ export const MockBoardData = [
     color: '#bf55ec'
   },
   { id: makeGuid(),
-    name: 'Done',
+    name: 'Completed',
     tasks: [
       { id: makeGuid(), name: 'Get up' },
     ],

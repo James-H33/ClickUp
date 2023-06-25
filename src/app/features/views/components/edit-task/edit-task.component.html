@@ -1,0 +1,44 @@
+<div class="cu-edit-task" *ngIf="vm$ | async as vm">
+  <div class="cu-edit-task-backdrop"></div>
+
+  <div class="cu-edit-task-modal">
+    <div class="cu-edit-task-modal-header">
+      <div>Workspace > Project > Task</div>
+
+      <div class="cu-edit-task-modal-header-close" (click)="close()">
+        <i class="material-icons">close</i>
+      </div>
+    </div>
+
+    <div class="cu-edit-task-modal-body">
+      <section class="cu-task-view">
+        <div class="cu-task-view__header">
+          <div class="cu-task-view__header-left">
+            <ng-container *ngIf="vm.statuses">
+              <cu-status-button [statuses]="vm.statuses" [selectedStatus]="vm.activeEdit.column" />
+            </ng-container>
+          </div>
+
+          <div class="cu-task-divider"></div>
+
+          <div class="cu-task-view__header-right">
+            <div class="cu-task-toolbar">
+              <div class="cu-task-toolbar__item">
+                <div class="cu-task-toolbar__item-title">Created</div>
+                <div class="cu-task-toolbar__item-tool">
+                  June 16, 2023
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="cu-task-view__body">
+          <div class="cu-task-details"></div>
+          <div class="cu-task-divider"></div>
+          <div class="cu-task-coms"></div>
+        </div>
+      </section>
+    </div>
+  </div>
+</div>
