@@ -1,0 +1,54 @@
+<div
+  *ngIf="selectedStatus"
+  class="cu-status-btn" [style.--current-status-color]="selectedStatus.color">
+  <div class="cu-status-btn-dropdown">
+    <div
+      class="cu-status-btn-dropdown__status"
+      cdkMenuItem
+      [cdkMenuTriggerFor]="StatusOptions"
+    >
+      <div
+        class="cu-status-btn-dropdown__status-current"
+      >
+        {{ selectedStatus.name }}
+      </div>
+
+      <div class="cu-status-btn-dropdown__status-divider"></div>
+
+      <button
+        class="cu-status-btn-dropdown__status-next"
+      >
+        <cu-icon class="no-hover" [size]="10" type="double-right-chevron" />
+      </button>
+    </div>
+
+    <ng-template #StatusOptions>
+      <div class="cu-status-btn-dropdown__options" cdkMenu>
+        <div
+          class="cu-status-btn-dropdown__option"
+          *ngFor="let status of statuses"
+          cdkMenuItem
+        >
+          <div class="cu-status-btn-dropdown__option-status">
+            <div
+              class="cu-status-btn-dropdown__option-status-color"
+             [style]="{ 'background-color': status.color }">
+            </div>
+
+            <div class="cu-status-btn-dropdown__option-status-text">
+              {{ status.name }}
+            </div>
+
+            <div *ngIf="selectedStatus.id === status.id" class="cu-status-btn-dropdown__option-status-selected">
+              <cu-icon
+                class="no-hover primary"
+                [size]="19"
+                type="checkmark"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </ng-template>
+  </div>
+</div>

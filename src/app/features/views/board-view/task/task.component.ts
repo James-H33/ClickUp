@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ITask } from 'src/app/shared/models';
+import { BoardActions } from 'src/app/shared/stores/board/board.actions';
 
 @Component({
   selector: 'cu-task',
@@ -15,7 +16,7 @@ import { ITask } from 'src/app/shared/models';
 })
 export class TaskComponent {
   @Output()
-  public editDone = new EventEmitter();
+  public edit = new EventEmitter();
 
   @Input()
   public set task(t: ITask) {
@@ -30,4 +31,8 @@ export class TaskComponent {
   public workspace: any;
 
   private _task: ITask = { id: '', name: '' };
+
+  public editTask() {
+    this.edit.emit(this.task);
+  }
 }

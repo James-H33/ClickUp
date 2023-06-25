@@ -33,7 +33,7 @@
         <cu-new-task
           [activePosition]="taskCreateState.position"
           (activePositonChange)="updateActivePosition($event)"
-          (editDone)="taskEditDone($event, column)"
+          (done)="taskCreationDone($event, column)"
         >
         </cu-new-task>
       </section>
@@ -48,6 +48,7 @@
           <cu-task
             [workspace]="workspace"
             [task]="task"
+            (edit)="editTask(column, task)"
           />
         </div>
       </ng-container>
@@ -59,7 +60,7 @@
         <cu-new-task
           [activePosition]="taskCreateState.position"
           (activePositonChange)="updateActivePosition($event)"
-          (editDone)="taskEditDone($event, column)"
+          (done)="taskCreationDone($event, column)"
         >
         </cu-new-task>
       </section>

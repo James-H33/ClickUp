@@ -12,6 +12,12 @@
   &.hover-primary {
     --hover-color: var(--theme-main-color);
   }
+
+  &.no-hover {
+    &:hover {
+      fill: var(--fill-color);
+    }
+  }
 }
 
 .cu-icon {
