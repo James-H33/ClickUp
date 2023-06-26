@@ -1,0 +1,42 @@
+.cu-task-todo {
+  padding: 10px;
+
+  .cu-task-todo__header {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    column-gap: 10px;
+    margin-bottom: 40px;
+  }
+
+  .cu-task-todo__header-title {
+    font-size: 22px;
+    font-weight: 300;
+  }
+
+  .cu-task-todo__header-action {
+    button {
+      display: flex;
+      align-items: center;
+      column-gap: 5px;
+
+      > div {
+        color: #fff;
+      }
+    }
+  }
+
+  .cu-task-todo__subtasks {
+    margin-top: 20px;
+
+    .cu-task-todo__subtasks-header {
+      .cu-task-todo__subtasks-header-title {
+        margin-bottom: 5px;
+      }
+
+      .cu-task-todo__subtasks-header-actions { }
+
+    }
+  }
+}
+

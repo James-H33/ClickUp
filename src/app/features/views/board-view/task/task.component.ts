@@ -30,7 +30,7 @@ export class TaskComponent {
   @Input()
   public workspace: any;
 
-  private _task: ITask = { id: '', name: '' };
+  private _task: ITask = { id: '', name: '', description: '' };
 
   public editTask() {
     this.edit.emit(this.task);

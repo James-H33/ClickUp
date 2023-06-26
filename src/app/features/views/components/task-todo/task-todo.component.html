@@ -1,0 +1,38 @@
+<div class="cu-task-todo">
+  <div class="cu-task-todo__header">
+    <div class="cu-task-todo__header-title">
+      To Do
+    </div>
+
+    <div class="cu-task-todo__header-action">
+      <button class="btn primary">
+        <div>Add</div>
+
+        <div>
+          <cu-icon
+            [style.--fill-color]="'#fff'"
+            class="no-padding"
+            [size]="10"
+            type="chevron-down"
+          />
+        </div>
+      </button>
+    </div>
+  </div>
+
+  <div class="cu-task-todo__subtasks">
+    <div class="cu-task-todo__subtasks-header">
+      <div class="cu-task-todo__subtasks-header-title">
+        Subtasks
+      </div>
+
+      <div class="cu-task-todo__subtasks-header-entry">
+
+      </div>
+
+      <div class="cu-task-todo__subtasks-header-actions">
+        <cu-subtask-input />
+      </div>
+    </div>
+  </div>
+</div>

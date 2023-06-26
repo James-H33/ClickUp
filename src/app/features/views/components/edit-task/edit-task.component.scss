@@ -1,5 +1,4 @@
 :host {
-
   .cu-edit-task {
     position: fixed;
     top: 0;
@@ -12,8 +11,10 @@
   }
 
   .cu-task-divider {
-    width: 10px;
+    width: 5px;
     height: 100%;
+    border-left: 1px solid #dcdfe4;
+    margin-left: 5px;
   }
 
   .cu-edit-task-backdrop {
@@ -29,7 +30,7 @@
   }
 
   .cu-edit-task-modal {
-    width: 90%;
+    width: 95%;
     height: calc(100vh - 50px);
     background: #fff;
     border-radius: 6px;
@@ -54,13 +55,23 @@
         cursor: pointer;
       }
     }
+
+    .cu-edit-task-modal-body {
+      height: calc(100% - 48px);
+      display: grid;
+      border-radius: 0 0 12px 12px;
+      overflow: hidden;
+      box-sizing: border-box;
+    }
   }
 
   .cu-task-view {
+    --grid-columns-layout: calc(55% - 5px) auto calc(45% - 5px);
+
     .cu-task-view__header {
       height: 80px;
       display: grid;
-      grid-template-columns: calc(55% - 5px) auto calc(45% - 5px);
+      grid-template-columns: var(--grid-columns-layout);
       align-items: center;
       border: 1px solid #dcdfe4;
     }
@@ -74,15 +85,78 @@
       padding: 10px;
     }
 
-    .cu-task-toolbar__item-title {}
-    .cu-task-toolbar__item-tool { }
+    .cu-task-toolbar__item-title {
+      color: var(--light-passive-text-color);
+      font-size: 10px;
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      line-height: 10px;
+    }
+    .cu-task-toolbar__item-tool {
+      color: var(--passive-text-color);
+      font-size: 12px;
+    }
+  }
+
+  .cu-task-view__body {
+    display: grid;
+    grid-template-columns: var(--grid-columns-layout);
+    height: calc(100% - 82px);
   }
 
   .cu-task-details {
-    .cu-task-details_title {}
-    .cu-task-details_description {}
-    .cu-task-details_subtasks {}
-    .cu-task-details_relationships {}
-    .cu-task-details_attachments {}
+    overflow-x: scroll;
+    padding: 50px 10px 20px 20px;
+
+    .cu-task-details__item {
+      margin-bottom: 10px;
+    }
+
+    textarea {
+      width: 100%;
+      color: var(--base-text-color);
+      background: transparent;
+      border: 1px solid transparent;
+      outline: none;
+      resize: none;
+      padding: 10px;
+      box-sizing: border-box;
+      font-family: inherit;
+      border-radius: 5px;
+
+      &::placeholder {
+        color: #b3b3b3;
+      }
+
+      &.title {
+        height: 55px;
+        font-size: 26px;
+        font-weight: 400;
+        line-height: 34px;
+      }
+
+      &.description {
+        height: 100px;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 20px;
+        padding: 10px 10px 40px 10px;
+      }
+
+      &:hover {
+        border: 1px solid #dcdfe4;
+      }
+    }
+
+    .cu-task-details_title {
+    }
+    .cu-task-details_description {
+    }
+    .cu-task-details_subtasks {
+    }
+    .cu-task-details_relationships {
+    }
+    .cu-task-details_attachments {
+    }
   }
 }

@@ -87,7 +87,8 @@ export class BoardViewComponent implements OnInit {
 
     this.taskCreateState.task = {
       id: makeGuid(),
-      name: ''
+      name: '',
+      description: ''
     }
   }
 
