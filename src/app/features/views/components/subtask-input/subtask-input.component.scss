@@ -1,0 +1,40 @@
+.cu-subtask-input {
+  padding: 5px 15px 5px 5px;
+  border: 1px solid transparent;
+  display: grid;
+  align-items: center;
+  grid-template-columns: auto 1fr auto;
+  box-shadow: 0 0 10px #0000000d;
+
+  --current-color: var(--passive-text-color);
+
+  &:hover {
+    border: 1px solid var(--theme-main-color);
+  }
+
+  .cu-subtask-input__icon {
+    width: 40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    span {
+      width: 10px;
+      height: 10px;
+      background: var(--current-color);
+    }
+  }
+
+  .cu-subtask-input__input {
+    width: 100%;
+
+    input {
+      width: 100%;
+      border: none;
+      outline: none;
+      box-sizing: border-box;
+    }
+  }
+
+  .cu-subtask-input__input-field {}
+}

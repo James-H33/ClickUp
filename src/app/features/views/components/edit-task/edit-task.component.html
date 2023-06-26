@@ -34,8 +34,30 @@
         </div>
 
         <div class="cu-task-view__body">
-          <div class="cu-task-details"></div>
+          <div class="cu-task-details">
+            <div class="cu-task-details__item">
+              <textarea
+                class="title"
+                placeholder="Required Title"
+                [value]="vm?.activeEdit.task.name">
+              </textarea>
+            </div>
+
+            <div class="cu-task-details__item">
+              <textarea
+                class="description"
+                placeholder="Add a description..."
+                [value]="vm?.activeEdit.task.description">
+              </textarea>
+            </div>
+
+            <div class="cu-task-details__item">
+              <cu-task-todo />
+            </div>
+          </div>
+
           <div class="cu-task-divider"></div>
+
           <div class="cu-task-coms"></div>
         </div>
       </section>

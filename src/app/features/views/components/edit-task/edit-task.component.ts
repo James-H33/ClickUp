@@ -1,11 +1,12 @@
-import { Component, Input } from '@angular/core';
-import { StatusButtonComponent } from "../../../../shared/ui/status-button/status-button.component";
-import { IAppState } from 'src/app/shared/stores/app-state';
+import { CommonModule } from '@angular/common';
+import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectActiveEdit, selectStatuses } from 'src/app/shared/stores/board/board.selector';
-import { AsyncPipe, CommonModule } from '@angular/common';
-import { BoardActions } from 'src/app/shared/stores/board/board.actions';
 import { combineLatest, map } from 'rxjs';
+import { IAppState } from 'src/app/shared/stores/app-state';
+import { BoardActions } from 'src/app/shared/stores/board/board.actions';
+import { selectActiveEdit, selectStatuses } from 'src/app/shared/stores/board/board.selector';
+import { StatusButtonComponent } from "../../../../shared/ui/status-button/status-button.component";
+import { TaskTodoComponent } from '../task-todo/task-todo.component';
 
 @Component({
     selector: 'cu-edit-task',
@@ -14,7 +15,8 @@ import { combineLatest, map } from 'rxjs';
     standalone: true,
     imports: [
       CommonModule,
-      StatusButtonComponent
+      StatusButtonComponent,
+      TaskTodoComponent
     ]
 })
 export class EditTaskComponent {
