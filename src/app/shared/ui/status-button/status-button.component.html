@@ -7,17 +7,13 @@
       cdkMenuItem
       [cdkMenuTriggerFor]="StatusOptions"
     >
-      <div
-        class="cu-status-btn-dropdown__status-current"
-      >
+      <div class="cu-status-btn-dropdown__status-current">
         {{ selectedStatus.name }}
       </div>
 
       <div class="cu-status-btn-dropdown__status-divider"></div>
 
-      <button
-        class="cu-status-btn-dropdown__status-next"
-      >
+      <button class="cu-status-btn-dropdown__status-next">
         <cu-icon class="no-hover" [size]="10" type="double-right-chevron" />
       </button>
     </div>
@@ -28,6 +24,7 @@
           class="cu-status-btn-dropdown__option"
           *ngFor="let status of statuses"
           cdkMenuItem
+          (click)="statusSelected(status)"
         >
           <div class="cu-status-btn-dropdown__option-status">
             <div

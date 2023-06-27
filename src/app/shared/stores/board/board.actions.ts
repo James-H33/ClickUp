@@ -1,5 +1,5 @@
 import { createAction, props } from "@ngrx/store";
-import { IBoard, IBoardColumn, ITask } from "../../models";
+import { IBoard, IStatus, ITask } from "../../models";
 
 const LoadBoard = createAction(
   '[Board] Load Board'
@@ -21,12 +21,12 @@ const UpdateBoardSuccess = createAction(
 
 const MoveTaskWithinColumn  = createAction(
   '[Board] Move Task Within Column',
-  props<{ column: IBoardColumn, previousIndex: number, nextIndex: number }>()
+  props<{ column: IStatus, previousIndex: number, nextIndex: number }>()
 );
 
 const MoveTaskToNewColumn  = createAction(
   '[Board] Move Task to New Column',
-  props<{  prev: IBoardColumn, target: IBoardColumn, task: ITask, insertIndex: number }>()
+  props<{  prev: IStatus, target: IStatus, task: ITask, insertIndex: number }>()
 );
 
 const SaveBoardToStorage  = createAction(
@@ -34,17 +34,18 @@ const SaveBoardToStorage  = createAction(
 );
 
 const SaveBoardToStorageSuccess  = createAction(
-  '[Board] Save Board to Storage Success'
+  '[Board] Save Board to Storage Success',
+  props<{ board: IBoard }>()
 );
 
 const AddTask = createAction(
   '[Board] Add Task',
-  props<{ column: IBoardColumn, task: ITask, position: string }>()
+  props<{ column: IStatus, task: ITask, position: string }>()
 );
 
 const SetEditTask = createAction(
   '[Board] Set Edit Task',
-  props<{ column: IBoardColumn, task: ITask }>()
+  props<{ column: IStatus, task: ITask }>()
 );
 
 const CloseEditTask = createAction(
@@ -62,5 +63,5 @@ export const BoardActions = {
   MoveTaskToNewColumn,
   AddTask,
   SetEditTask,
-  CloseEditTask
+  CloseEditTask,
 }

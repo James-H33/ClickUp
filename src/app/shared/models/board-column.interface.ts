@@ -1,6 +1,6 @@
 import { ITask } from "./task.interface";
 
-export interface IBoardColumn {
+export interface IStatus {
   id: string;
   name: string;
   color: string;

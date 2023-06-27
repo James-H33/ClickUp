@@ -1,11 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
-import { IBoard, IBoardColumn, ITask } from "../../models";
+import { IBoard, IStatus, ITask } from "../../models";
 import { BoardActions } from "./board.actions";
 
 export interface IBoardState {
   board: IBoard;
   isLoading: boolean;
-  activeEdit: { column: IBoardColumn, task: ITask }
+  activeEdit: { column: IStatus, task: ITask }
 }
 
 const initialState: IBoardState = {
@@ -137,6 +137,13 @@ export const boardReducer = createReducer(
     return {
       ...s,
       activeEdit: null
+    }
+  }),
+
+  on(BoardActions.SaveBoardToStorageSuccess, (s, { board }) => {
+    return {
+      ...s,
+      board
     }
   })
 );
