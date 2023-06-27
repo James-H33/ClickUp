@@ -15,7 +15,11 @@
         <div class="cu-task-view__header">
           <div class="cu-task-view__header-left">
             <ng-container *ngIf="vm.statuses">
-              <cu-status-button [statuses]="vm.statuses" [selectedStatus]="vm.activeEdit.column" />
+              <cu-status-button
+                [statuses]="vm.statuses"
+                [selectedStatus]="vm.activeEdit.column"
+                (statusChange)="statusChange($event)"
+              />
             </ng-container>
           </div>
 

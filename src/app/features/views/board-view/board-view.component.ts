@@ -4,7 +4,7 @@ import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 import { HorizontalControlDirective, NoPropagationDirective } from 'src/app/shared/directives';
-import { IBoard, IBoardColumn, ITask } from 'src/app/shared/models';
+import { IBoard, IStatus, ITask } from 'src/app/shared/models';
 import { IAppState } from 'src/app/shared/stores/app-state';
 import { BoardActions } from 'src/app/shared/stores/board/board.actions';
 import { selectBoardState } from 'src/app/shared/stores/board/board.selector';
@@ -82,7 +82,7 @@ export class BoardViewComponent implements OnInit {
     }
   }
 
-  public createNewTask(col: IBoardColumn) {
+  public createNewTask(col: IStatus) {
     this.taskCreateState.columnId = col.id;
 
     this.taskCreateState.task = {
@@ -92,7 +92,7 @@ export class BoardViewComponent implements OnInit {
     }
   }
 
-  public taskCreationDone(name: string, column: IBoardColumn) {
+  public taskCreationDone(name: string, column: IStatus) {
     if (name.length === 0) {
       this.taskCreateState = new TaskCreationState();
       return;
@@ -109,7 +109,7 @@ export class BoardViewComponent implements OnInit {
     this.taskCreateState = new TaskCreationState();
   }
 
-  public editTask(column: IBoardColumn, task: ITask) {
+  public editTask(column: IStatus, task: ITask) {
     this.store.dispatch(BoardActions.SetEditTask({ column, task }));
   }
 

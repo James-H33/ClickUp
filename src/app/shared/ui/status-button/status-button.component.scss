@@ -12,7 +12,7 @@
       margin: 0 10px 0 0;
       border-radius: 3px;
       cursor: pointer;
-      transition: all 0.2s ease-in-out;
+      transition: box-shadow 0.2s ease-in-out;
 
       &:hover {
         box-shadow: 0 0 0 2px var(--current-status-color);
@@ -34,7 +34,7 @@
         width: 1px;
         height: 100%;
         background-color: #dcdfe4;
-        transition: all 0.2s ease-in-out;
+        transition: height 0.2s ease-in-out;
       }
 
       .cu-status-btn-dropdown__status-next {

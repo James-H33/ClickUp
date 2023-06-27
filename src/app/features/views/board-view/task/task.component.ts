@@ -2,7 +2,6 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ITask } from 'src/app/shared/models';
-import { BoardActions } from 'src/app/shared/stores/board/board.actions';
 
 @Component({
   selector: 'cu-task',
@@ -19,6 +18,9 @@ export class TaskComponent {
   public edit = new EventEmitter();
 
   @Input()
+  public workspace: any;
+
+  @Input()
   public set task(t: ITask) {
     this._task = { ...t };
   }
@@ -26,9 +28,6 @@ export class TaskComponent {
   public get task() {
     return this._task;
   }
-
-  @Input()
-  public workspace: any;
 
   private _task: ITask = { id: '', name: '', description: '' };
 

@@ -58,7 +58,7 @@ export class BoardEffects {
             })
           )
       }),
-      map(() => BoardActions.SaveBoardToStorageSuccess())
+      map((b: IBoard) => BoardActions.SaveBoardToStorageSuccess({ board: b }))
     ))
 
   private loadBoards() {

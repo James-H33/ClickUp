@@ -4,8 +4,9 @@ import {
   CdkMenuItem,
   CdkMenuTrigger,
 } from '@angular/cdk/menu';
-import { CommonModule, NgFor, NgIf } from '@angular/common';
-import { Component, Input } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { IStatus } from '../../models';
 import { IconComponent } from "../icon/icon.component";
 
 @Component({
@@ -24,8 +25,19 @@ import { IconComponent } from "../icon/icon.component";
 })
 export class StatusButtonComponent {
   @Input()
-  public statuses: any[] = [];
+  public statuses: IStatus[] = [];
 
   @Input()
-  public selectedStatus: any = null;
+  public selectedStatus: IStatus | null = null;
+
+  @Output()
+  public statusChange = new EventEmitter();
+
+  public statusSelected(status: IStatus) {
+    if (status.id === this.selectedStatus?.id) {
+      return;
+    }
+
+    this.statusChange.emit(status);
+  }
 }
