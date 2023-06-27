@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, map, tap } from 'rxjs';
+import { combineLatest, tap } from 'rxjs';
 import { IStatus } from 'src/app/shared/models';
 import { IAppState } from 'src/app/shared/stores/app-state';
 import { BoardActions } from 'src/app/shared/stores/board/board.actions';
@@ -18,21 +18,19 @@ import { TaskTodoComponent } from '../task-todo/task-todo.component';
       CommonModule,
       StatusButtonComponent,
       TaskTodoComponent
-    ]
+    ],
+    changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class EditTaskComponent {
   public statuses$ = this.store.select(selectStatuses);
   public activeEdit$ = this.store.select(selectActiveEdit);
 
   public vm: any = {};
-  public vm$ = combineLatest([
-    this.statuses$,
-    this.activeEdit$
-  ])
+  public vm$ = combineLatest({
+    statuses: this.statuses$,
+    activeEdit: this.activeEdit$
+  })
     .pipe(
-      map(([statuses, activeEdit]) => {
-        return { statuses, activeEdit };
-      }),
       tap(vm => this.vm = vm)
     );
 
