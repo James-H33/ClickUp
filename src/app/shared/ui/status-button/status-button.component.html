@@ -1,6 +1,6 @@
 <div
   *ngIf="selectedStatus"
-  class="cu-status-btn" [style.--current-status-color]="selectedStatus.color">
+  class="cu-status-btn" [ngStyle]="{'--current-status-color': selectedStatus.color}">
   <div class="cu-status-btn-dropdown">
     <div
       class="cu-status-btn-dropdown__status"
