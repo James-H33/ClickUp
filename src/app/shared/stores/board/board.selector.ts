@@ -10,7 +10,7 @@ export const selectBoardState = createSelector(
 
 export const selectStatuses = createSelector(
   selectBoard,
-  (s) => s?.board?.columns ?? []
+  (s) => s?.board?.statuses ?? []
 )
 
 export const selectActiveEdit = createSelector(

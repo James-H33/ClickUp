@@ -6,7 +6,7 @@ import { tap } from 'rxjs';
 import { HorizontalControlDirective, NoPropagationDirective } from 'src/app/shared/directives';
 import { IBoard, IStatus, ITask } from 'src/app/shared/models';
 import { IAppState } from 'src/app/shared/stores/app-state';
-import { BoardActions } from 'src/app/shared/stores/board/board.actions';
+import * as BoardActions from 'src/app/shared/stores/board/board.actions';
 import { selectBoardState } from 'src/app/shared/stores/board/board.selector';
 import { makeGuid } from 'src/app/shared/utils/make-guid';
 import { IconComponent } from "../../../shared/ui/icon/icon.component";
@@ -15,7 +15,7 @@ import { TaskComponent } from "./task/task.component";
 import { EditTaskComponent } from "../components/edit-task/edit-task.component";
 
 export class TaskCreationState {
-  public columnId: string = '';
+  public statusId: string = '';
   public position: string = 'bottom';
   public task: ITask | null = null;
 }
@@ -61,21 +61,21 @@ export class BoardViewComponent implements OnInit {
     let nextContainerId = event.container.id;
 
     if (previousContainerId === nextContainerId) {
-      const column = this.board.columns.find((c) => c.id === nextContainerId);
-      this.store.dispatch(BoardActions.MoveTaskWithinColumn({
-        column,
+      const status = this.board.statuses.find((c) => c.id === nextContainerId);
+      this.store.dispatch(BoardActions.MoveTaskWithinStatus({
+        status,
         previousIndex: event.previousIndex,
         nextIndex: event.currentIndex
       }));
     } else {
-      let targetColumn = this.board.columns.find((c) => c.id === nextContainerId);
-      let prevColumn = event.previousContainer.data;
+      let targetStatus = this.board.statuses.find((c) => c.id === nextContainerId);
+      let prevStatus = event.previousContainer.data;
       let [task] = event.item.data;
       let insertIndex = event.currentIndex;
 
-      this.store.dispatch(BoardActions.MoveTaskToNewColumn({
-        prev: prevColumn,
-        target: targetColumn,
+      this.store.dispatch(BoardActions.MoveTaskToNewStatus({
+        prev: prevStatus,
+        target: targetStatus,
         task,
         insertIndex
       }));
@@ -83,7 +83,7 @@ export class BoardViewComponent implements OnInit {
   }
 
   public createNewTask(col: IStatus) {
-    this.taskCreateState.columnId = col.id;
+    this.taskCreateState.statusId = col.id;
 
     this.taskCreateState.task = {
       id: makeGuid(),
@@ -92,7 +92,7 @@ export class BoardViewComponent implements OnInit {
     }
   }
 
-  public taskCreationDone(name: string, column: IStatus) {
+  public taskCreationDone(name: string, status: IStatus) {
     if (name.length === 0) {
       this.taskCreateState = new TaskCreationState();
       return;
@@ -105,12 +105,12 @@ export class BoardViewComponent implements OnInit {
 
     const position = this.taskCreateState.position;
 
-    this.store.dispatch(BoardActions.AddTask({ column, task, position }));
+    this.store.dispatch(BoardActions.AddTask({ status, task, position }));
     this.taskCreateState = new TaskCreationState();
   }
 
-  public editTask(column: IStatus, task: ITask) {
-    this.store.dispatch(BoardActions.SetEditTask({ column, task }));
+  public editTask(status: IStatus, task: ITask) {
+    this.store.dispatch(BoardActions.SetEditTask({ status, task }));
   }
 
   public updateActivePosition(position: string) {

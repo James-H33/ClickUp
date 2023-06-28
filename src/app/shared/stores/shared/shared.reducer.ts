@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { SharedActions } from './shared.actions';
+import * as SharedActions from './shared.actions';
 
 export interface ISharedState {
   isMenuOpen: boolean;

@@ -17,7 +17,7 @@
             <ng-container *ngIf="vm.statuses">
               <cu-status-button
                 [statuses]="vm.statuses"
-                [selectedStatus]="vm.activeEdit.column"
+                [selectedStatus]="vm.activeEdit.status"
                 (statusChange)="statusChange($event)"
               />
             </ng-container>

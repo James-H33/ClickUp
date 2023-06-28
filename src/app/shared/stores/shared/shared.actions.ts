@@ -9,8 +9,3 @@ export const SetSimpleMenu = createAction(
   '[Shared] Set Simple Menu',
     props<{ isOpen: boolean }>()
 )
-
-export const SharedActions = {
-  SetMenu,
-  SetSimpleMenu
-}

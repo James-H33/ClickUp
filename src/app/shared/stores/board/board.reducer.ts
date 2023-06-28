@@ -1,11 +1,11 @@
 import { createReducer, on } from "@ngrx/store";
 import { IBoard, IStatus, ITask } from "../../models";
-import { BoardActions } from "./board.actions";
+import * as BoardActions from "./board.actions";
 
 export interface IBoardState {
   board: IBoard;
   isLoading: boolean;
-  activeEdit: { column: IStatus, task: ITask }
+  activeEdit: { status: IStatus, task: ITask }
 }
 
 const initialState: IBoardState = {
@@ -39,22 +39,22 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.MoveTaskWithinColumn, (s, { column, previousIndex, nextIndex }) => {
-    const tasks = column.tasks.slice();
+  on(BoardActions.MoveTaskWithinStatus, (s, { status, previousIndex, nextIndex }) => {
+    const tasks = status.tasks.slice();
     const [ task ] = tasks.splice(previousIndex, 1);
     tasks.splice(nextIndex, 0, task);
 
-    const updatedColumn = { ...column, tasks };
+    const updateStatus = { ...status, tasks };
 
-    const updatedColumns = s.board.columns.map(c => {
-      if (c.id === column.id) {
-        return updatedColumn;
+    const updatedStatuses = s.board.statuses.map(c => {
+      if (c.id === status.id) {
+        return updateStatus;
       }
 
       return c;
     });
 
-    let updatedBoard = { ...s.board, columns: updatedColumns };
+    let updatedBoard = { ...s.board, statuses: updatedStatuses };
 
     return {
       ...s,
@@ -62,33 +62,33 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.MoveTaskToNewColumn, (s, { prev, target, task, insertIndex }) => {
-    const prevColumn = s.board.columns.find(c => c.id === prev.id);
-    const targetColumn = s.board.columns.find(c => c.id === target.id);
+  on(BoardActions.MoveTaskToNewStatus, (s, { prev, target, task, insertIndex }) => {
+    const prevStatus = s.board.statuses.find(c => c.id === prev.id);
+    const targetStatus = s.board.statuses.find(c => c.id === target.id);
 
-    const updatePrevColumnTasks = prevColumn.tasks.filter(t => t.id !== task.id);
-    const updatePrevColumn = { ...prevColumn, tasks: updatePrevColumnTasks };
+    const updatedPrevStatusTasks = prevStatus.tasks.filter(t => t.id !== task.id);
+    const updatedPrevStatus = { ...prevStatus, tasks: updatedPrevStatusTasks };
 
-    const targetTasks = targetColumn.tasks;
+    const targetTasks = targetStatus.tasks;
     const pre = targetTasks.slice(0, insertIndex);
     const post = targetTasks.slice(insertIndex);
 
-    const updateTargetTasks = [...pre, task, ...post];
-    const updateTargetColumn = { ...targetColumn, tasks: updateTargetTasks };
+    const updatedTargetTasks = [...pre, task, ...post];
+    const updatedTargetStatus = { ...targetStatus, tasks: updatedTargetTasks };
 
-    const updatedColumns = s.board.columns.map(c => {
+    const updatedStatuses = s.board.statuses.map(c => {
       if (c.id === prev.id) {
-        return updatePrevColumn;
+        return updatedPrevStatus;
       }
 
       if (c.id === target.id) {
-        return updateTargetColumn;
+        return updatedTargetStatus;
       }
 
       return c;
     });
 
-    let updatedBoard = { ...s.board, columns: updatedColumns };
+    let updatedBoard = { ...s.board, statuses: updatedStatuses };
 
     return {
       ...s,
@@ -96,8 +96,8 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.AddTask, (s, { column, task, position }) => {
-    let tasks = column.tasks;
+  on(BoardActions.AddTask, (s, { status, task, position }) => {
+    let tasks = status.tasks;
     let newTasks = [];
 
     if (position === 'bottom') {
@@ -106,16 +106,16 @@ export const boardReducer = createReducer(
       newTasks = [task, ...tasks];
     }
 
-    const updatedColumn = { ...column, tasks: newTasks };
-    const updatedColumns = s.board.columns.map(c => {
-      if (c.id === column.id) {
-        return updatedColumn;
+    const updatedStatus = { ...status, tasks: newTasks };
+    const updatedStatuses = s.board.statuses.map(c => {
+      if (c.id === status.id) {
+        return updatedStatus;
       }
 
       return c;
     });
 
-    const updatedBoard = { ...s.board, columns: updatedColumns };
+    const updatedBoard = { ...s.board, statuses: updatedStatuses };
 
     return {
       ...s,
@@ -123,12 +123,12 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.SetEditTask, (s, { column, task }) => {
+  on(BoardActions.SetEditTask, (s, { status, task }) => {
     return {
       ...s,
       activeEdit: {
         task,
-        column
+        status
       }
     }
   }),

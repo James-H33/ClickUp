@@ -4,7 +4,7 @@ import { Store } from '@ngrx/store';
 import { combineLatest, tap } from 'rxjs';
 import { IStatus } from 'src/app/shared/models';
 import { IAppState } from 'src/app/shared/stores/app-state';
-import { BoardActions } from 'src/app/shared/stores/board/board.actions';
+import * as BoardActions from 'src/app/shared/stores/board/board.actions';
 import { selectActiveEdit, selectStatuses } from 'src/app/shared/stores/board/board.selector';
 import { StatusButtonComponent } from "../../../../shared/ui/status-button/status-button.component";
 import { TaskTodoComponent } from '../task-todo/task-todo.component';
@@ -44,9 +44,9 @@ export class EditTaskComponent {
 
   public statusChange(status: IStatus) {
     let { activeEdit } = this.vm;
-    let currentStatus: IStatus = activeEdit.column;
+    let currentStatus: IStatus = activeEdit.status;
 
-    this.store.dispatch(BoardActions.MoveTaskToNewColumn({
+    this.store.dispatch(BoardActions.MoveTaskToNewStatus({
       prev: currentStatus,
       target: status,
       task: activeEdit.task,
@@ -55,7 +55,7 @@ export class EditTaskComponent {
 
     this.store.dispatch(BoardActions.SetEditTask({
       task: activeEdit.task,
-      column: status
+      status
      }));
   }
 }

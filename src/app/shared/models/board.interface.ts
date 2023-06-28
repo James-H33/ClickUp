@@ -1,7 +1,7 @@
-import { IStatus } from "./board-column.interface";
+import { IStatus } from "./status.interface";
 
 export interface IBoard {
   id: string;
   name: string;
-  columns: IStatus[];
+  statuses: IStatus[];
 }

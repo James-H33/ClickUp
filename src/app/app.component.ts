@@ -3,7 +3,7 @@ import { Store } from '@ngrx/store';
 import { tap } from 'rxjs';
 import { IAppState } from './shared/stores/app-state';
 import { selectMenu } from './shared/stores/shared/shared.selector';
-import { UserActions } from './shared/stores/user/user.actions';
+import * as UserActions from './shared/stores/user/user.actions';
 import { selectActiveEdit } from './shared/stores/board/board.selector';
 
 @Component({

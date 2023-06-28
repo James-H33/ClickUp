@@ -4,41 +4,41 @@
   <div class="cu-board-header">
     <div
       class="cu-board-header__item"
-      *ngFor="let column of board?.columns"
-      [ngStyle]="{ 'border-top-color': column.color }"
+      *ngFor="let status of board?.statuses"
+      [ngStyle]="{ 'border-top-color': status.color }"
     >
       <div class="cu-board-header__item-title">
-        {{ column.name }}
+        {{ status.name }}
       </div>
 
       <div class="cu-board-header__item-tasks-count">
-        {{ column.tasks.length }}
+        {{ status.tasks.length }}
       </div>
     </div>
   </div>
 
   <div class="cu-board-dashboard" cdkDropListGroup>
     <div
-      *ngFor="let column of board?.columns"
-      class="cu-board-dashboard__column"
-      [id]="column.id"
-      [cdkDropListData]="column"
+      *ngFor="let status of board?.statuses"
+      class="cu-board-dashboard__status"
+      [id]="status.id"
+      [cdkDropListData]="status"
       (cdkDropListDropped)="taskMove($event)"
       cdkDropList
     >
       <section
-        *ngIf="taskCreateState.columnId === column.id && taskCreateState.position === 'top'"
+        *ngIf="taskCreateState.statusId === status.id && taskCreateState.position === 'top'"
         class="cu-board-dashboard__new-task-top"
       >
         <cu-new-task
           [activePosition]="taskCreateState.position"
           (activePositonChange)="updateActivePosition($event)"
-          (done)="taskCreationDone($event, column)"
+          (done)="taskCreationDone($event, status)"
         >
         </cu-new-task>
       </section>
 
-      <ng-container *ngFor="let task of column.tasks; let taskIndex = index">
+      <ng-container *ngFor="let task of status.tasks; let taskIndex = index">
         <div
           cdkDrag
           [cdkDragData]="[task, taskIndex]"
@@ -48,26 +48,26 @@
           <cu-task
             [workspace]="workspace"
             [task]="task"
-            (edit)="editTask(column, task)"
+            (edit)="editTask(status, task)"
           />
         </div>
       </ng-container>
 
       <section
-        *ngIf="taskCreateState.columnId === column.id && taskCreateState.position === 'bottom'"
+        *ngIf="taskCreateState.statusId === status.id && taskCreateState.position === 'bottom'"
         class="cu-board-dashboard__new-task-bottom"
       >
         <cu-new-task
           [activePosition]="taskCreateState.position"
           (activePositonChange)="updateActivePosition($event)"
-          (done)="taskCreationDone($event, column)"
+          (done)="taskCreationDone($event, status)"
         >
         </cu-new-task>
       </section>
 
       <button
         class="cu-board-dashboard__add-task"
-        (click)="createNewTask(column)"
+        (click)="createNewTask(status)"
         appNoPropagation
         stopEvent="click"
       >
