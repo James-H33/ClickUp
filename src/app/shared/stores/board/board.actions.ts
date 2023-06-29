@@ -21,11 +21,16 @@ export const UpdateBoardSuccess = createAction(
 
 export const MoveTaskWithinStatus  = createAction(
   '[Board] Move Task Within Status',
-  props<{ status: IStatus, previousIndex: number, nextIndex: number }>()
+  props<{ task: ITask, nextIndex: number }>()
 );
 
 export const MoveTaskToNewStatus  = createAction(
   '[Board] Move Task to New Status',
+  props<{  prev: IStatus, target: IStatus, task: ITask }>()
+);
+
+export const MoveTaskToNewStatusAtPos  = createAction(
+  '[Board] Move Task to New Status At Pos',
   props<{  prev: IStatus, target: IStatus, task: ITask, insertIndex: number }>()
 );
 
@@ -40,14 +45,19 @@ export const SaveBoardToStorageSuccess  = createAction(
 
 export const AddTask = createAction(
   '[Board] Add Task',
-  props<{ status: IStatus, task: ITask, position: string }>()
+  props<{ task: ITask, position: string }>()
 );
 
-export const SetEditTask = createAction(
-  '[Board] Set Edit Task',
-  props<{ status: IStatus, task: ITask }>()
+export const SetEdit = createAction(
+  '[Board] Set Edit',
+  props<{ statusId: string, taskId: string }>()
 );
 
 export const CloseEditTask = createAction(
   '[Board] Close Edit Task'
+);
+
+export const UpdateTask = createAction(
+  '[Board] Update Task',
+  props<{ status: IStatus, task: ITask }>()
 );

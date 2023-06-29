@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, EventEmitter, Input, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { ITask } from 'src/app/shared/models';
+import { makeDate } from 'src/app/utils/date.util';
 
 @Component({
   selector: 'cu-task',
@@ -29,7 +30,7 @@ export class TaskComponent {
     return this._task;
   }
 
-  private _task: ITask = { id: '', name: '', description: '' };
+  private _task: ITask = { id: '', name: '', description: '', createdDate: makeDate(), position: 0, statusId: '' };
 
   public editTask() {
     this.edit.emit(this.task);

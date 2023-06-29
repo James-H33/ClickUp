@@ -1,17 +1,21 @@
 import { createReducer, on } from "@ngrx/store";
-import { IBoard, IStatus, ITask } from "../../models";
+import { IBoard, ITask } from "../../models";
 import * as BoardActions from "./board.actions";
 
 export interface IBoardState {
   board: IBoard;
   isLoading: boolean;
-  activeEdit: { status: IStatus, task: ITask }
+  isEditingTask: boolean,
+  editingTaskId: string;
+  editingStatusId: string;
 }
 
 const initialState: IBoardState = {
   board: null,
   isLoading: true,
-  activeEdit: null
+  isEditingTask: false,
+  editingTaskId: null,
+  editingStatusId: null
 };
 
 export const boardReducer = createReducer(
@@ -39,22 +43,47 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.MoveTaskWithinStatus, (s, { status, previousIndex, nextIndex }) => {
-    const tasks = status.tasks.slice();
-    const [ task ] = tasks.splice(previousIndex, 1);
-    tasks.splice(nextIndex, 0, task);
+  on(BoardActions.MoveTaskWithinStatus, (s, { task, nextIndex }) => {
+    const tasks = s.board.tasks;
+    const tasksForStatus = tasks.filter(t => t.statusId === task.statusId);
+    tasksForStatus.sort((a, b) => a.position - b.position);
 
-    const updateStatus = { ...status, tasks };
+    let tasksWithNewPosition: ITask[] = [];
 
-    const updatedStatuses = s.board.statuses.map(c => {
-      if (c.id === status.id) {
-        return updateStatus;
+    for (let i = 0; i < tasksForStatus.length; i++) {
+      let currTask = tasksForStatus[i];
+
+      if (currTask.id === task.id) {
+        continue;
       }
 
-      return c;
-    });
+      if (tasksWithNewPosition.length === nextIndex) {
+        tasksWithNewPosition.push(task);
+        i--;
+        continue;
+      }
 
-    let updatedBoard = { ...s.board, statuses: updatedStatuses };
+      tasksWithNewPosition.push(currTask);
+    }
+
+    if (tasksWithNewPosition.length === nextIndex) {
+      tasksWithNewPosition.push(task);
+    }
+
+    tasksWithNewPosition = normalizeSortOnTasks(tasksWithNewPosition);
+
+    const updatedTasks = tasks.map(t => {
+      if (t.statusId === task.statusId) {
+        return tasksWithNewPosition.find(c => c.id === t.id);
+      }
+
+      return t;
+    })
+
+    const updatedBoard = {
+      ...s.board,
+      tasks: updatedTasks
+    }
 
     return {
       ...s,
@@ -62,33 +91,49 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.MoveTaskToNewStatus, (s, { prev, target, task, insertIndex }) => {
-    const prevStatus = s.board.statuses.find(c => c.id === prev.id);
-    const targetStatus = s.board.statuses.find(c => c.id === target.id);
+  on(BoardActions.MoveTaskToNewStatusAtPos, (s, { prev, target, task, insertIndex }) => {
+    let newTask = {
+      ...task,
+      statusId: target.id,
+      position: insertIndex
+    }
 
-    const updatedPrevStatusTasks = prevStatus.tasks.filter(t => t.id !== task.id);
-    const updatedPrevStatus = { ...prevStatus, tasks: updatedPrevStatusTasks };
+    const tasks = s.board.tasks;
 
-    const targetTasks = targetStatus.tasks;
-    const pre = targetTasks.slice(0, insertIndex);
-    const post = targetTasks.slice(insertIndex);
-
-    const updatedTargetTasks = [...pre, task, ...post];
-    const updatedTargetStatus = { ...targetStatus, tasks: updatedTargetTasks };
-
-    const updatedStatuses = s.board.statuses.map(c => {
-      if (c.id === prev.id) {
-        return updatedPrevStatus;
+    const updatedTasks = tasks.map(t => {
+      if (t.id === task.id) {
+        return newTask;
       }
 
-      if (c.id === target.id) {
-        return updatedTargetStatus;
+      return t;
+    })
+
+    const updatedPrevTasksForPosition = updatedTasks.map((t) => {
+      if (t.statusId === prev.id && t.position > task.position) {
+        return {
+          ...t,
+          position: t.position - 1
+        }
       }
 
-      return c;
+      return t;
     });
 
-    let updatedBoard = { ...s.board, statuses: updatedStatuses };
+    const updatedNewTasksForPosition = updatedPrevTasksForPosition.map((t) => {
+      if (t.statusId === target.id && t.position >= newTask.position && t.id !== task.id) {
+        return {
+          ...t,
+          position: t.position + 1
+        }
+      }
+
+      return t;
+    });
+
+    const updatedBoard = {
+      ...s.board,
+      tasks: updatedNewTasksForPosition
+    }
 
     return {
       ...s,
@@ -96,26 +141,63 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.AddTask, (s, { status, task, position }) => {
-    let tasks = status.tasks;
-    let newTasks = [];
+  on(BoardActions.MoveTaskToNewStatus, (s, { prev, target, task }) => {
+    const tasks = s.board.tasks;
+    const targetTasks = tasks.filter(t => t.statusId === target.id);
+
+    let newTask = {
+      ...task,
+      statusId: target.id,
+      position: targetTasks.length
+    }
+
+    const updatedTasks = tasks.map(t => {
+      if (t.id === task.id) {
+        return newTask;
+      }
+
+      return t;
+    })
+
+    const updatedBoard = {
+      ...s.board,
+      tasks: updatedTasks
+    }
+
+    return {
+      ...s,
+      board: updatedBoard,
+      editingStatusId: target.id,
+      editingTaskId: newTask.id
+    }
+  }),
+
+  on(BoardActions.AddTask, (s, { task, position }) => {
+    let tasks = s.board.tasks.slice();
+    let taskForStatus = tasks.filter(t => {
+      return t.statusId === task.statusId;
+    });
+
+    let newTasks: ITask[] = [];
 
     if (position === 'bottom') {
-      newTasks = [...tasks, task];
+      newTasks = [...taskForStatus, task];
     } else {
-      newTasks = [task, ...tasks];
+      newTasks = [task, ...taskForStatus];
     }
 
-    const updatedStatus = { ...status, tasks: newTasks };
-    const updatedStatuses = s.board.statuses.map(c => {
-      if (c.id === status.id) {
-        return updatedStatus;
+    tasks.push(task);
+    newTasks = normalizeSortOnTasks(newTasks);
+
+    const updatedTasks = tasks.map(t => {
+      if (t.statusId === task.statusId) {
+        return newTasks.find(c => c.id === t.id);
       }
 
-      return c;
-    });
+      return t;
+    })
 
-    const updatedBoard = { ...s.board, statuses: updatedStatuses };
+    const updatedBoard = { ...s.board, tasks: updatedTasks };
 
     return {
       ...s,
@@ -123,20 +205,21 @@ export const boardReducer = createReducer(
     }
   }),
 
-  on(BoardActions.SetEditTask, (s, { status, task }) => {
+  on(BoardActions.SetEdit, (s, { statusId, taskId }) => {
     return {
       ...s,
-      activeEdit: {
-        task,
-        status
-      }
+      isEditingTask: true,
+      editingStatusId: statusId,
+      editingTaskId: taskId
     }
   }),
 
   on(BoardActions.CloseEditTask, (s) => {
     return {
       ...s,
-      activeEdit: null
+      isEditingTask: false,
+      editingStatusId: null,
+      editingTaskId: null
     }
   }),
 
@@ -145,5 +228,44 @@ export const boardReducer = createReducer(
       ...s,
       board
     }
+  }),
+
+  on(BoardActions.UpdateTask, (s, { status, task }) => {
+    let newTask = { ...task }
+
+    const tasks = s.board.tasks;
+
+    const updatedTasks = tasks.map(t => {
+      if (t.id === task.id) {
+        return newTask;
+      }
+
+      return t;
+    })
+
+    const updatedBoard = {
+      ...s.board,
+      tasks: updatedTasks
+    }
+
+    return {
+      ...s,
+      board: updatedBoard
+    }
   })
 );
+
+function normalizeSortOnTasks(tasks: ITask[]) {
+  let output = [];
+
+  for (let i = 0; i < tasks.length; i++) {
+    let t = {
+      ...tasks[i],
+      position: i
+    }
+
+    output.push(t);
+  }
+
+  return output;
+}

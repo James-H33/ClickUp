@@ -17,7 +17,7 @@
             <ng-container *ngIf="vm.statuses">
               <cu-status-button
                 [statuses]="vm.statuses"
-                [selectedStatus]="vm.activeEdit.status"
+                [selectedStatus]="vm.status"
                 (statusChange)="statusChange($event)"
               />
             </ng-container>
@@ -30,7 +30,7 @@
               <div class="cu-task-toolbar__item">
                 <div class="cu-task-toolbar__item-title">Created</div>
                 <div class="cu-task-toolbar__item-tool">
-                  June 16, 2023
+                  {{vm?.task.createdDate | date: 'MMM d, h:mm:ss a'}}
                 </div>
               </div>
             </div>
@@ -43,7 +43,8 @@
               <textarea
                 class="title"
                 placeholder="Required Title"
-                [value]="vm?.activeEdit.task.name">
+                [value]="vm?.task.name"
+                (input)="updateName($event)">
               </textarea>
             </div>
 
@@ -51,7 +52,7 @@
               <textarea
                 class="description"
                 placeholder="Add a description..."
-                [value]="vm?.activeEdit.task.description">
+                [value]="vm.task.description">
               </textarea>
             </div>
 

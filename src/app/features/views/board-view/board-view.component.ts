@@ -2,17 +2,18 @@ import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cd
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { tap } from 'rxjs';
+import { combineLatest, concatMap, map, switchMap, tap, zip } from 'rxjs';
 import { HorizontalControlDirective, NoPropagationDirective } from 'src/app/shared/directives';
 import { IBoard, IStatus, ITask } from 'src/app/shared/models';
 import { IAppState } from 'src/app/shared/stores/app-state';
 import * as BoardActions from 'src/app/shared/stores/board/board.actions';
-import { selectBoardState } from 'src/app/shared/stores/board/board.selector';
+import { selectBoardState, selectStatuses, selectTasksByStatus, selectTasksWithStatus } from 'src/app/shared/stores/board/board.selector';
 import { makeGuid } from 'src/app/shared/utils/make-guid';
 import { IconComponent } from "../../../shared/ui/icon/icon.component";
 import { NewTaskComponent } from './new-task/new-task.component';
 import { TaskComponent } from "./task/task.component";
 import { EditTaskComponent } from "../components/edit-task/edit-task.component";
+import { makeDate } from 'src/app/utils/date.util';
 
 export class TaskCreationState {
   public statusId: string = '';
@@ -39,12 +40,18 @@ export class TaskCreationState {
   ]
 })
 export class BoardViewComponent implements OnInit {
-  public board$ = this.store.select(selectBoardState)
-    .pipe(
-      tap(b => this.board = b)
-    );
+  public board$ = this.store.select(selectBoardState);
+  public statuses$ = this.store.select(selectTasksWithStatus);
 
-  public board: IBoard = null;
+  public vm: any = {
+    board: null,
+    statuses: [],
+  };
+  public vm$ = combineLatest({
+    board: this.board$,
+    statuses: this.statuses$
+  }).pipe(tap(vm => this.vm = vm))
+
   public taskCreateState = new TaskCreationState();
   public workspace = { name: 'Work' };
 
@@ -61,19 +68,18 @@ export class BoardViewComponent implements OnInit {
     let nextContainerId = event.container.id;
 
     if (previousContainerId === nextContainerId) {
-      const status = this.board.statuses.find((c) => c.id === nextContainerId);
+      let [ task ] = event.item.data;
       this.store.dispatch(BoardActions.MoveTaskWithinStatus({
-        status,
-        previousIndex: event.previousIndex,
+        task,
         nextIndex: event.currentIndex
       }));
     } else {
-      let targetStatus = this.board.statuses.find((c) => c.id === nextContainerId);
+      let targetStatus = this.vm.statuses.find((c: any) => c.id === nextContainerId);
       let prevStatus = event.previousContainer.data;
-      let [task] = event.item.data;
+      let [ task ] = event.item.data;
       let insertIndex = event.currentIndex;
 
-      this.store.dispatch(BoardActions.MoveTaskToNewStatus({
+      this.store.dispatch(BoardActions.MoveTaskToNewStatusAtPos({
         prev: prevStatus,
         target: targetStatus,
         task,
@@ -82,17 +88,20 @@ export class BoardViewComponent implements OnInit {
     }
   }
 
-  public createNewTask(col: IStatus) {
-    this.taskCreateState.statusId = col.id;
+  public createNewTask(status: IStatus) {
+    this.taskCreateState.statusId = status.id;
 
     this.taskCreateState.task = {
       id: makeGuid(),
+      statusId: status.id,
       name: '',
-      description: ''
+      description: '',
+      createdDate: makeDate(),
+      position: 0
     }
   }
 
-  public taskCreationDone(name: string, status: IStatus) {
+  public taskCreationDone(name: string) {
     if (name.length === 0) {
       this.taskCreateState = new TaskCreationState();
       return;
@@ -105,12 +114,12 @@ export class BoardViewComponent implements OnInit {
 
     const position = this.taskCreateState.position;
 
-    this.store.dispatch(BoardActions.AddTask({ status, task, position }));
+    this.store.dispatch(BoardActions.AddTask({ task, position }));
     this.taskCreateState = new TaskCreationState();
   }
 
-  public editTask(status: IStatus, task: ITask) {
-    this.store.dispatch(BoardActions.SetEditTask({ status, task }));
+  public editTask(task: ITask) {
+    this.store.dispatch(BoardActions.SetEdit({ statusId: task.statusId, taskId: task.id }));
   }
 
   public updateActivePosition(position: string) {
