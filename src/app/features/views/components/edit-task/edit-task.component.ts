@@ -4,8 +4,8 @@ import { Store } from '@ngrx/store';
 import { combineLatest, tap } from 'rxjs';
 import { IStatus } from 'src/app/shared/models';
 import { IAppState } from 'src/app/shared/stores/app-state';
-import { BoardActions } from 'src/app/shared/stores/board/board.actions';
-import { selectActiveEdit, selectStatuses } from 'src/app/shared/stores/board/board.selector';
+import * as BoardActions from 'src/app/shared/stores/board/board.actions';
+import { selectActiveEditStatus, selectActiveEditTask, selectStatuses } from 'src/app/shared/stores/board/board.selector';
 import { StatusButtonComponent } from "../../../../shared/ui/status-button/status-button.component";
 import { TaskTodoComponent } from '../task-todo/task-todo.component';
 
@@ -23,12 +23,14 @@ import { TaskTodoComponent } from '../task-todo/task-todo.component';
 })
 export class EditTaskComponent {
   public statuses$ = this.store.select(selectStatuses);
-  public activeEdit$ = this.store.select(selectActiveEdit);
+  public task$ = this.store.select(selectActiveEditTask);
+  public status$ = this.store.select(selectActiveEditStatus);
 
   public vm: any = {};
   public vm$ = combineLatest({
     statuses: this.statuses$,
-    activeEdit: this.activeEdit$
+    task: this.task$,
+    status: this.status$
   })
     .pipe(
       tap(vm => this.vm = vm)
@@ -43,19 +45,30 @@ export class EditTaskComponent {
   }
 
   public statusChange(status: IStatus) {
-    let { activeEdit } = this.vm;
-    let currentStatus: IStatus = activeEdit.column;
+    let currentStatus: IStatus = this.vm.status;
+    let currentTask = this.vm.task;
 
-    this.store.dispatch(BoardActions.MoveTaskToNewColumn({
+    this.store.dispatch(BoardActions.MoveTaskToNewStatus({
       prev: currentStatus,
       target: status,
-      task: activeEdit.task,
-      insertIndex: status.tasks.length
+      task: currentTask
      }));
 
-    this.store.dispatch(BoardActions.SetEditTask({
-      task: activeEdit.task,
-      column: status
-     }));
+    // this.store.dispatch(BoardActions.SetEditTask({
+    //   task: activeEdit.task,
+    //   status
+    //  }));
+  }
+
+  public updateName(event: any) {
+    let name = event.target.value;
+    let { task, status } = this.vm.activeEdit;
+    const updatedTask = { ...task, name };
+    this.store.dispatch(BoardActions.UpdateTask({ status, task: updatedTask }));
+
+    // this.store.dispatch(BoardActions.SetEditTask({
+    //   task: updatedTask,
+    //   status
+    //  }));
   }
 }

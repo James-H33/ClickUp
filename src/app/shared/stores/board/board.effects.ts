@@ -2,18 +2,22 @@ import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
 import { catchError, delay, map, of, switchMap } from "rxjs";
-import { IAppState } from "../app-state";
-import { BoardActions } from "./board.actions";
-import { selectBoardState } from "./board.selector";
-import { MockBoardData } from "src/app/features/views/board-view/mock-board-data";
-import { makeGuid } from "../../utils/make-guid";
+import { MockStatuses, MockTasks } from "src/app/features/views/board-view/mock-board-data";
 import { IBoard } from "../../models";
+import { makeGuid } from "../../utils/make-guid";
+import { IAppState } from "../app-state";
+import * as BoardActions from "./board.actions";
+import { selectBoardState } from "./board.selector";
 
-const loadBoardInitialBoards = () => {
+const modelVersion = '1.1';
+const modelVersionKey = 'ClickUpModelVersion';
+
+const loadStarterBoard = () => {
   return of({
     id: makeGuid(),
     name: 'Board 1',
-    columns: MockBoardData
+    statuses: MockStatuses,
+    tasks: MockTasks,
   }).pipe(delay(200));
 }
 
@@ -48,7 +52,7 @@ export class BoardEffects {
 
   saveBoard$ = createEffect(() => this.actions$
     .pipe(
-      ofType(BoardActions.MoveTaskToNewColumn, BoardActions.MoveTaskWithinColumn, BoardActions.AddTask),
+      ofType(BoardActions.MoveTaskToNewStatusAtPos, BoardActions.MoveTaskWithinStatus, BoardActions.AddTask),
       switchMap(() => {
         return this.store.select(selectBoardState)
           .pipe(
@@ -65,8 +69,12 @@ export class BoardEffects {
     return loadBoards()
       .pipe(
         switchMap((board: IBoard) => {
-          if (!board) {
-            return loadBoardInitialBoards();
+          let version = localStorage.getItem(modelVersionKey);
+
+          if (version !== modelVersion || !board) {
+            localStorage.setItem(modelVersionKey, modelVersion);
+            localStorage.removeItem('board');
+            return loadStarterBoard();
           }
 
           return of(board);

@@ -11,8 +11,8 @@ export const GetUser = createAction(
     props<{ id: number }>()
 )
 
-export const UserLoaded = createAction(
-  '[User] Loading User',
+export const GetUserSuccess = createAction(
+  '[User] Get User Success',
     props<{ user: IUser }>()
 )
 
@@ -20,10 +20,3 @@ export const IsLoadingUser = createAction(
   '[User] Is Loading User',
   props<{ isLoading: boolean }>()
 )
-
-export const UserActions = {
-  GetUser,
-  SetUser,
-  UserLoaded,
-  IsLoadingUser
-}

@@ -5,7 +5,7 @@ import { Store } from '@ngrx/store';
 import { combineLatest, filter, map, startWith, tap } from 'rxjs';
 import { MenuControlDirective } from '../../directives/menu-control/menu-control.directive';
 import { IAppState } from '../../stores/app-state';
-import { SharedActions } from '../../stores/shared/shared.actions';
+import * as SharedActions from '../../stores/shared/shared.actions';
 import { selectMenu, selectSimpleMenu } from '../../stores/shared/shared.selector';
 import { IconComponent } from '../icon/icon.component';
 

@@ -1,5 +1,5 @@
 import { createReducer, on } from '@ngrx/store';
-import { UserActions } from './user.actions';
+import * as UserActions from './user.actions';
 
 export interface IUser {
   color: string;
@@ -33,7 +33,7 @@ export const userReducer = createReducer(
 
   initialState,
 
-  on(UserActions.UserLoaded, (s, { user }) => {
+  on(UserActions.GetUserSuccess, (s, { user }) => {
     return {
       ...s,
       user,

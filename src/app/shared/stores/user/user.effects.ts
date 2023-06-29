@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { EMPTY, of } from 'rxjs';
 import { catchError, delay, map, switchMap, tap } from 'rxjs/operators';
-import { UserActions } from './user.actions';
+import  * as UserActions from './user.actions';
 import { makeGuid } from '../../utils/make-guid';
 import { IAppState } from '../app-state';
 import { Store } from '@ngrx/store';
@@ -36,7 +36,7 @@ export class UserEffects {
       switchMap(() =>
         getUser()
           .pipe(
-            map(user => UserActions.UserLoaded({
+            map(user => UserActions.GetUserSuccess({
               user
             })),
             catchError(() => EMPTY)
