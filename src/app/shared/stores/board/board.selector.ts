@@ -1,5 +1,6 @@
-import { createSelector } from "@ngrx/store";
+import { createSelector, select } from "@ngrx/store";
 import { IAppState } from "../app-state";
+import { IStatus, ITask } from "../../models";
 
 export const selectBoard = (s: IAppState) => s.board;
 
@@ -9,8 +10,13 @@ export const selectBoardState = createSelector(
 )
 
 export const selectStatuses = createSelector(
-  selectBoard,
-  (s) => s?.board?.statuses ?? []
+  selectBoardState,
+  (b) => b?.statuses ?? []
+)
+
+export const selectTasks = createSelector(
+  selectBoardState,
+  (b) => b?.tasks ?? []
 )
 
 export const selectIsEditing = createSelector(
@@ -18,60 +24,49 @@ export const selectIsEditing = createSelector(
   (s) => s?.isEditingTask
 )
 
-export const selectTasksWithStatus = createSelector(
-  selectBoard,
-  (s) => {
-    let b = s?.board;
+export const selectAllStatusesWithTheirTasks = createSelector(
+  selectStatuses,
+  selectTasks,
+  (statuses: IStatus[], tasks: ITask[]) => {
+    return statuses.map(status => {
+      const tasksForStatus = tasks.filter(t => t.statusId === status.id);
+      tasksForStatus.sort((a, b) => a.position - b.position);
 
-    if (!b) {
-      return [];
-    }
-
-    return b.statuses.map(status => {
-      const tasks =  b.tasks.filter(t => t.statusId === status.id);
-      tasks.sort((a, b) => a.position - b.position);
       return {
         ...status,
-        tasks
+        tasks: tasksForStatus
       }
     });
   }
 )
 
 export const selectTasksByStatus = (statusId: string) => createSelector(
-  selectBoard,
-  (s) => {
-    let b = s?.board;
-
-    if (!b) {
-      return [];
-    }
-
-    const tasks =  b.tasks.filter(c => c.statusId === statusId);
+  selectTasks,
+  (tasks: ITask[]) => {
+    const tasksForStatus = tasks.filter(t => t.statusId === statusId);
     tasks.sort((a, b) => a.position - b.position);
 
-    return tasks;
+    return tasksForStatus;
   }
 )
 
 export const selectActiveEditTask = createSelector(
   selectBoard,
-  (s) => {
+  selectTasks,
+  (s, tasks: ITask[]) => {
     let { editingTaskId } = s;
-    let tasks = s.board.tasks;
+    let task = tasks.find(t => t.id === editingTaskId);
 
-    let task = tasks.find(c => c.id === editingTaskId);
-
-    return task;
+    return { ...task };
   }
 )
 
 export const selectActiveEditStatus = createSelector(
   selectBoard,
-  (s) => {
+  selectStatuses,
+  (s, statuses: IStatus[]) => {
     let { editingStatusId } = s;
-
-    let status = s.board.statuses.find(c => c.id === editingStatusId);
+    let status = statuses.find(c => c.id === editingStatusId);
 
     return status;
   }

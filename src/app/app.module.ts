@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { NgModule, isDevMode } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -15,6 +15,7 @@ import { BoardEffects } from './shared/stores/board/board.effects';
 import { boardReducer } from './shared/stores/board/board.reducer';
 import { IAppState } from './shared/stores/app-state';
 import { EditTaskComponent } from "./features/views/components/edit-task/edit-task.component";
+import { StoreDevtoolsModule } from '@ngrx/store-devtools';
 
 @NgModule({
   declarations: [
@@ -38,8 +39,15 @@ import { EditTaskComponent } from "./features/views/components/edit-task/edit-ta
       user: userReducer,
       board: boardReducer
     }),
+
     // Effects
     EffectsModule.forRoot(UserEffects, BoardEffects),
+
+    // Devtools
+    StoreDevtoolsModule.instrument({
+      maxAge: 25,
+      logOnly: !isDevMode()
+    }),
   ]
 })
 export class AppModule { }

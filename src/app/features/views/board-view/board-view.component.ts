@@ -2,18 +2,18 @@ import { CdkDrag, CdkDragDrop, CdkDropList, CdkDropListGroup } from '@angular/cd
 import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { combineLatest, concatMap, map, switchMap, tap, zip } from 'rxjs';
+import { combineLatest, tap } from 'rxjs';
 import { HorizontalControlDirective, NoPropagationDirective } from 'src/app/shared/directives';
-import { IBoard, IStatus, ITask } from 'src/app/shared/models';
+import { IStatus, ITask } from 'src/app/shared/models';
 import { IAppState } from 'src/app/shared/stores/app-state';
 import * as BoardActions from 'src/app/shared/stores/board/board.actions';
-import { selectBoardState, selectStatuses, selectTasksByStatus, selectTasksWithStatus } from 'src/app/shared/stores/board/board.selector';
+import { selectBoardState, selectAllStatusesWithTheirTasks } from 'src/app/shared/stores/board/board.selector';
 import { makeGuid } from 'src/app/shared/utils/make-guid';
+import { makeDate } from 'src/app/utils/date.util';
 import { IconComponent } from "../../../shared/ui/icon/icon.component";
+import { EditTaskComponent } from "../components/edit-task/edit-task.component";
 import { NewTaskComponent } from './new-task/new-task.component';
 import { TaskComponent } from "./task/task.component";
-import { EditTaskComponent } from "../components/edit-task/edit-task.component";
-import { makeDate } from 'src/app/utils/date.util';
 
 export class TaskCreationState {
   public statusId: string = '';
@@ -41,7 +41,7 @@ export class TaskCreationState {
 })
 export class BoardViewComponent implements OnInit {
   public board$ = this.store.select(selectBoardState);
-  public statuses$ = this.store.select(selectTasksWithStatus);
+  public statuses$ = this.store.select(selectAllStatusesWithTheirTasks);
 
   public vm: any = {
     board: null,
