@@ -53,22 +53,17 @@ export class EditTaskComponent {
       target: status,
       task: currentTask
      }));
-
-    // this.store.dispatch(BoardActions.SetEditTask({
-    //   task: activeEdit.task,
-    //   status
-    //  }));
   }
 
   public updateName(event: any) {
     let name = event.target.value;
-    let { task, status } = this.vm.activeEdit;
-    const updatedTask = { ...task, name };
-    this.store.dispatch(BoardActions.UpdateTask({ status, task: updatedTask }));
+    let { task, status } = this.vm;
 
-    // this.store.dispatch(BoardActions.SetEditTask({
-    //   task: updatedTask,
-    //   status
-    //  }));
+    const updatedTask = { ...task, name };
+
+    this.store.dispatch(BoardActions.UpdateTask({
+      status,
+      task: updatedTask
+    }));
   }
 }

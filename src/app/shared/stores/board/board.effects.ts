@@ -1,7 +1,7 @@
 import { Injectable } from "@angular/core";
 import { Actions, createEffect, ofType } from "@ngrx/effects";
 import { Store } from "@ngrx/store";
-import { catchError, delay, map, of, switchMap } from "rxjs";
+import { catchError, delay, exhaustMap, map, of, switchMap } from "rxjs";
 import { MockStatuses, MockTasks } from "src/app/features/views/board-view/mock-board-data";
 import { IBoard } from "../../models";
 import { makeGuid } from "../../utils/make-guid";
@@ -39,7 +39,7 @@ export class BoardEffects {
   getBoard$ = createEffect(() => this.actions$
     .pipe(
       ofType(BoardActions.LoadBoard),
-      switchMap(() => {
+      exhaustMap(() => {
         return this.loadBoards()
           .pipe(
             map((board: any) => {
@@ -52,7 +52,13 @@ export class BoardEffects {
 
   saveBoard$ = createEffect(() => this.actions$
     .pipe(
-      ofType(BoardActions.MoveTaskToNewStatusAtPos, BoardActions.MoveTaskWithinStatus, BoardActions.AddTask),
+      ofType(
+        BoardActions.MoveTaskToNewStatusAtPos,
+        BoardActions.MoveTaskToNewStatus,
+        BoardActions.MoveTaskWithinStatus,
+        BoardActions.AddTask,
+        BoardActions.UpdateTask
+      ),
       switchMap(() => {
         return this.store.select(selectBoardState)
           .pipe(
