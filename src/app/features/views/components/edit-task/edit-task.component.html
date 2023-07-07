@@ -52,12 +52,13 @@
               <textarea
                 class="description"
                 placeholder="Add a description..."
-                [value]="vm.task.description">
+                [value]="vm.task.description"
+                (input)="updateDescription($event)">
               </textarea>
             </div>
 
             <div class="cu-task-details__item">
-              <cu-task-todo />
+              <cu-task-todo [task]="vm.task" />
             </div>
           </div>
 

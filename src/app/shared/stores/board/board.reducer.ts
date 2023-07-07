@@ -1,6 +1,8 @@
 import { createReducer, on } from "@ngrx/store";
 import { IBoard, ITask } from "../../models";
 import * as BoardActions from "./board.actions";
+import { ISubtask } from "../../models/subtasks.interface";
+import { makeGuid } from "../../utils/make-guid";
 
 export interface IBoardState {
   board: IBoard;
@@ -252,6 +254,29 @@ export const boardReducer = createReducer(
       ...s,
       board: updatedBoard
     }
+  }),
+
+  on(BoardActions.AddSubtask, (s, { taskId, subtaskContent }) => {
+    const { subtasks } = s.board;
+    const subtasksForStatus = subtasks.filter(s => s.taskId === taskId);
+    const subtask: ISubtask = {
+      id: makeGuid(),
+      taskId: taskId,
+      name: subtaskContent,
+      position: subtasksForStatus.length - 1
+    };
+
+    const updatedSubtasks = [...subtasks, subtask];
+
+    const updatedBoard = {
+      ...s.board,
+      subtasks: updatedSubtasks
+    }
+
+    return {
+      ...s,
+      board: updatedBoard
+    };
   })
 );
 

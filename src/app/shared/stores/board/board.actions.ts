@@ -61,3 +61,8 @@ export const UpdateTask = createAction(
   '[Board] Update Task',
   props<{ status: IStatus, task: ITask }>()
 );
+
+export const AddSubtask = createAction(
+  '[Board] Add Subtask',
+  props<{ taskId: string, subtaskContent: string }>()
+)

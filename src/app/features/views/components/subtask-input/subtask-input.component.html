@@ -1,17 +1,19 @@
-<div class="cu-subtask-input">
+<div class="cu-subtask-input" appOutsideClick (clickOutside)="setInactive()">
   <div class="cu-subtask-input__icon">
     <span></span>
   </div>
 
   <div class="cu-subtask-input__input">
     <input
+      #InputRef
       class="cu-subtask-input__input-field"
       placeholder="Add a subtask..."
+      (focus)="setActive()"
       type="text"
     />
   </div>
 
-  <div>
-    <button class="btn primary">Save</button>
+  <div *ngIf="isActive">
+    <button class="btn primary" (click)="addSubtask()">Save</button>
   </div>
 </div>

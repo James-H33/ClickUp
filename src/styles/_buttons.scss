@@ -26,4 +26,8 @@ button {
     color: #fff;
     background-color: var(--theme-main-color);
   }
+
+  &.no-transition {
+    transition: none;
+  }
 }

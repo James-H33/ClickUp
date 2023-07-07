@@ -1,4 +1,5 @@
 import { IStatus } from "./status.interface";
+import { ISubtask } from "./subtasks.interface";
 import { ITask } from "./task.interface";
 
 export interface IBoard {
@@ -6,4 +7,5 @@ export interface IBoard {
   name: string;
   statuses: IStatus[];
   tasks: ITask[];
+  subtasks: ISubtask[];
 }

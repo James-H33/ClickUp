@@ -66,4 +66,16 @@ export class EditTaskComponent {
       task: updatedTask
     }));
   }
+
+  public updateDescription(event: any) {
+    let description = event.target.value;
+    let { task, status } = this.vm;
+
+    const updatedTask = { ...task, description };
+
+    this.store.dispatch(BoardActions.UpdateTask({
+      status,
+      task: updatedTask
+    }));
+  }
 }

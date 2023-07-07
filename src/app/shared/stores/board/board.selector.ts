@@ -19,6 +19,11 @@ export const selectTasks = createSelector(
   (b) => b?.tasks ?? []
 )
 
+export const selectSubtasks = createSelector(
+  selectBoardState,
+  (b) => b?.subtasks ?? []
+)
+
 export const selectIsEditing = createSelector(
   selectBoard,
   (s) => s?.isEditingTask
