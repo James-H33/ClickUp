@@ -29,13 +29,21 @@
   .cu-task-todo__subtasks {
     margin-top: 20px;
 
+
     .cu-task-todo__subtasks-header {
       .cu-task-todo__subtasks-header-title {
+        color: var(--passive-text-color);
+        font-weight: bold;
         margin-bottom: 5px;
       }
+    }
 
-      .cu-task-todo__subtasks-header-actions { }
 
+    .cu-task-todo__list {
+      display: flex;
+      flex-direction: column;
+      row-gap: 10px;
+      margin-bottom: 10px;
     }
   }
 }

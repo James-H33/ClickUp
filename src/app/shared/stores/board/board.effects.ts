@@ -18,6 +18,7 @@ const loadStarterBoard = () => {
     name: 'Board 1',
     statuses: MockStatuses,
     tasks: MockTasks,
+    subtasks: []
   }).pipe(delay(200));
 }
 

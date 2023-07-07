@@ -26,14 +26,18 @@
       <div class="cu-task-todo__subtasks-header-title">
         Subtasks
       </div>
+    </div>
 
-      <div class="cu-task-todo__subtasks-header-entry">
+    <div class="cu-task-todo__list">
+      <ng-container *ngIf="subtasksForTask$ | async as subtasks">
+        <div *ngFor="let subtask of subtasks" class="cu_task-todo_subtask">
+          {{ subtask.name }}
+        </div>
+      </ng-container>
+    </div>
 
-      </div>
-
-      <div class="cu-task-todo__subtasks-header-actions">
-        <cu-subtask-input />
-      </div>
+    <div class="cu-task-todo__subtask-actions">
+      <cu-subtask-input (add)="addSubtask($event)"  />
     </div>
   </div>
 </div>
