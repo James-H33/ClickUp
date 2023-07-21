@@ -9,7 +9,7 @@ import { IAppState } from "../app-state";
 import * as BoardActions from "./board.actions";
 import { selectBoardState } from "./board.selector";
 
-const modelVersion = '1.1';
+const modelVersion = '1.2';
 const modelVersionKey = 'ClickUpModelVersion';
 
 const loadStarterBoard = () => {
