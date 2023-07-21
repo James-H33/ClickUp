@@ -4,7 +4,7 @@
       To Do
     </div>
 
-    <div class="cu-task-todo__header-action">
+    <!-- <div class="cu-task-todo__header-action">
       <button class="btn primary">
         <div>Add</div>
 
@@ -18,7 +18,7 @@
           />
         </div>
       </button>
-    </div>
+    </div> -->
   </div>
 
   <div class="cu-task-todo__subtasks">
@@ -30,7 +30,7 @@
 
     <div class="cu-task-todo__list">
       <ng-container *ngIf="subtasksForTask$ | async as subtasks">
-        <div *ngFor="let subtask of subtasks" class="cu_task-todo_subtask">
+        <div *ngFor="let subtask of subtasks" class="cu-task-todo_subtask">
           {{ subtask.name }}
         </div>
       </ng-container>
