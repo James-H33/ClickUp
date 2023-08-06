@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChildren } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ViewChildren } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { AccordianComponent } from '../accordian/accordian.component';
@@ -25,7 +25,8 @@ import { MenuControlDirective } from '../../directives/menu-control/menu-control
     IconComponent,
     AccordianComponent,
     MenuControlDirective
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SidebarComponent {
   @ViewChildren(AccordianComponent)
@@ -35,17 +36,11 @@ export class SidebarComponent {
   public isSimpleMenuOpen$ = this.store.select(selectSimpleMenu);
   public vm?: any = {};
 
-  public vm$ = combineLatest([
-    this.isMenuOpen$,
-    this.isSimpleMenuOpen$
-  ])
+  public vm$ = combineLatest({
+    isMenuOpen: this.isMenuOpen$,
+    isSimpleMenuOpen: this.isSimpleMenuOpen$
+  })
     .pipe(
-      map(([isMenuOpen, isSimpleMenuOpen]) => {
-        return {
-          isMenuOpen,
-          isSimpleMenuOpen
-        };
-      }),
       tap(s => this.vm = s)
     );
 

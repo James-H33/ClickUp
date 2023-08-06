@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router, RouterModule } from '@angular/router';
 import { Store } from '@ngrx/store';
 import { combineLatest, filter, map, startWith, tap } from 'rxjs';
@@ -19,7 +19,8 @@ import { IconComponent } from '../icon/icon.component';
     IconComponent,
     RouterModule,
     MenuControlDirective,
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ViewsBarComponent implements OnInit {
   public isSideMenuOpen$ = this.store.select(selectMenu);
@@ -31,6 +32,10 @@ export class ViewsBarComponent implements OnInit {
       map((v: any) => {
         if (v.url?.includes('board')) {
           return 'board';
+        }
+
+        if (v.url?.includes('gantt')) {
+          return 'gantt';
         }
 
         return 'list';

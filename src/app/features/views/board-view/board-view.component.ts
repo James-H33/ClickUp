@@ -97,6 +97,7 @@ export class BoardViewComponent implements OnInit {
       name: '',
       description: '',
       createdDate: makeDate(),
+      startDate: makeDate(),
       position: 0
     }
   }

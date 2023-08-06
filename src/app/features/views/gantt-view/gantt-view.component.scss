@@ -1,0 +1,8 @@
+:host {
+  --ganttChartHeight: 400;
+
+  .gantt-view {
+    display: grid;
+    height: calc(var(--ganttChartHeight) * 1px);
+  }
+}
