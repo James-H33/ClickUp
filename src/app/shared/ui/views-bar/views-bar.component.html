@@ -47,6 +47,17 @@
       </div>
 
       <div class="cu-views__group-divider"></div>
+
+      <div [routerLink]="['v', 'gantt']" class="cu-views__group-item" [class.active]="vm.view === 'gantt'">
+        <div>
+          <cu-icon type="board" />
+        </div>
+
+        <div class="cu-views__group-item-text">
+          Gantt
+        </div>
+      </div>
+
     </div>
   </div>
 </ng-container>

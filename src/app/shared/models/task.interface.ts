@@ -4,5 +4,7 @@ export interface ITask {
   name: string;
   description: string;
   createdDate: string;
+  startDate: string;
+  duration: number;
   position: number;
 }

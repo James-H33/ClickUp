@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, ElementRef, HostBinding, Input } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ElementRef, HostBinding, Input } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 export enum IconType {
@@ -25,7 +25,8 @@ export enum IconType {
   imports: [
     CommonModule,
     FormsModule
-  ]
+  ],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class IconComponent {
   @Input()

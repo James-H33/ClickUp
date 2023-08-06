@@ -30,7 +30,16 @@ export class TaskComponent {
     return this._task;
   }
 
-  private _task: ITask = { id: '', name: '', description: '', createdDate: makeDate(), position: 0, statusId: '' };
+  private _task: ITask = {
+    id: '',
+    name: '',
+    statusId: '',
+    description: '',
+    createdDate: makeDate(),
+    startDate: makeDate(),
+    duration: 0,
+    position: 0,
+  };
 
   public editTask() {
     this.edit.emit(this.task);

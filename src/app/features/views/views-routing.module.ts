@@ -1,8 +1,9 @@
 import { NgModule } from "@angular/core";
 import { RouterModule } from "@angular/router";
-import { ViewsComponent } from "./views.component";
 import { BoardViewComponent } from "./board-view/board-view.component";
+import { GanttViewComponent } from "./gantt-view/gantt-view.component";
 import { ListViewComponent } from "./list-view/list-view.component";
+import { ViewsComponent } from "./views.component";
 
 const routes = [
   {
@@ -10,7 +11,8 @@ const routes = [
     component: ViewsComponent,
     children: [
       { path: 'list', component: ListViewComponent },
-      { path: 'board', component: BoardViewComponent }
+      { path: 'board', component: BoardViewComponent },
+      { path: 'gantt', component: GanttViewComponent }
     ]
   }
 ];

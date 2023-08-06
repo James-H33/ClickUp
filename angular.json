@@ -32,9 +32,12 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/assets/js/gantt/dhtmlxgantt.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/gantt/dhtmlxgantt.js"
+            ]
           },
           "configurations": {
             "production": {
@@ -98,9 +101,12 @@
             ],
             "styles": [
               "@angular/material/prebuilt-themes/deeppurple-amber.css",
+              "src/assets/js/gantt/dhtmlxgantt.css",
               "src/styles.scss"
             ],
-            "scripts": []
+            "scripts": [
+              "src/assets/js/gantt/dhtmlxgantt.js"
+            ]
           }
         }
       }

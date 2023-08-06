@@ -34,6 +34,8 @@ export const MockTasks: any[] = [
     name: 'Get to work',
     description: '6AM Grind starts now',
     createdDate: '2023-06-12T20:09:00.000Z',
+    startDate: '2023-06-12T20:09:00.000Z',
+    duration: 16,
     position: 0
   },
   { id: makeGuid(),
@@ -41,6 +43,8 @@ export const MockTasks: any[] = [
     name: 'Call ClickUp',
     description: 'Hope for offer letter',
     createdDate: '2023-06-16T18:11:00.000Z',
+    startDate: '2023-06-16T18:11:00.000Z',
+    duration: 2,
     position: 1
   },
 
@@ -49,6 +53,8 @@ export const MockTasks: any[] = [
     name: 'Pick up groceries',
     description: 'Food is good.',
     createdDate: '2023-06-10T19:22:00.000Z',
+    startDate: '2023-06-10T19:22:00.000Z',
+    duration: 5,
     position: 0
   },
 
@@ -57,6 +63,8 @@ export const MockTasks: any[] = [
     name: 'Go home',
     description: '',
     createdDate: '2023-06-01T20:21:00.000Z',
+    startDate: '2023-06-01T20:21:00.000Z',
+    duration: 5,
     position: 0
   },
 
@@ -65,6 +73,8 @@ export const MockTasks: any[] = [
     name: 'Fall asleep',
     description: 'Good habits, good developer, happy life.',
     createdDate: '2023-06-12T15:09:00.000Z',
+    startDate: '2023-06-12T15:09:00.000Z',
+    duration: 8,
     position: 0
   },
 
@@ -72,7 +82,9 @@ export const MockTasks: any[] = [
     statusId: MockStatuses[4].id,
     name: 'Get up',
     description: 'Coffee then code.',
-    createdDate: '2023-06-12T:20:21:000Z',
+    createdDate: '2023-06-12T15:09:00.000Z',
+    startDate: '2023-06-12T15:09:00.000Z',
+    duration: 4,
     position: 0
   },
 ];
