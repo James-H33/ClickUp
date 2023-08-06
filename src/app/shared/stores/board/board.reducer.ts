@@ -175,10 +175,8 @@ export const boardReducer = createReducer(
   }),
 
   on(BoardActions.AddTask, (s, { task, position }) => {
-    let tasks = s.board.tasks.slice();
-    let taskForStatus = tasks.filter(t => {
-      return t.statusId === task.statusId;
-    });
+    let tasks = [...s.board.tasks];
+    let taskForStatus = getTasksForStatusInOrder(tasks, task.statusId);
 
     let newTasks: ITask[] = [];
 
@@ -293,4 +291,11 @@ function normalizeSortOnTasks(tasks: ITask[]) {
   }
 
   return output;
+}
+
+function getTasksForStatusInOrder(tasks: ITask[], statusId: string) {
+  const tasksForStatus = tasks.filter(t => t.statusId === statusId);
+  tasksForStatus.sort((a, b) => a.position - b.position);
+
+  return tasksForStatus;
 }

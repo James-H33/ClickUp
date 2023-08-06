@@ -44,6 +44,10 @@
       flex-direction: column;
       row-gap: 10px;
       margin-bottom: 10px;
+
+      .cu-task-todo_subtask {
+        padding: 10px 0;
+      }
     }
   }
 }
